@@ -1,0 +1,855 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<link href='https://fonts.googleapis.com/css?family=Press+Start+2P' rel='stylesheet'>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+		html {
+			background-image: linear-gradient(azure, lavenderblush);
+			width: 100%;
+			height: 100%;
+			background-attachment: fixed;
+		}
+		* {
+			font-family: 'Press Start 2P';
+			font-size: 22px;
+			color: black;
+			text-shadow: 2px 2px red;
+		}
+
+		.letterblocks {
+			font-size: 50px;
+
+		}
+		.letterblocks button {
+			font-size: 22px;
+			padding: 50px 50px 50px 50px;
+			background: none;
+			border: none;
+			cursor: pointer;
+			outline: none;
+		}
+		.playerSelect {
+			font-size: 20px;
+			padding: 50px 50px 50px 50px;
+			background: none;
+			border: none;
+			cursor: pointer;
+			outline: none;
+		}
+
+		.playerSelected {
+			font-size: 20px;
+			padding: 50px 50px 50px 50px;
+			background: none;
+			border: none;
+			cursor: pointer;
+			outline: none;
+			font-weight: bolder;
+			text-shadow: 2px 2px #ff0000;
+		}
+
+		.letterblocks button:hover {
+		
+		}
+
+			.letterblocks span {
+				position:absolute;
+				padding: 50px 50px 50px 50px;
+				font-size: 50px;
+				background: none;
+				border: none;
+				cursor:default;
+			}
+
+		.medalfirst {
+			background-image: url(first.png);
+			display: inline-block;
+			height: 32px; /*512px;*/
+			width: 32px; /*512px;*/
+			z-index: -1;
+			background-size: cover;
+		}
+
+		.medalsecond {
+			background-image: url(second.png);
+			display: inline-block;
+			height: 32px; /*512px;*/
+			width: 32px; /*512px;*/
+			z-index: -1;
+			background-size: cover;
+		}
+
+		.medalthird {
+			background-image: url(third.png);
+			display: inline-block;
+			height: 32px; /*512px;*/
+			width: 32px; /*512px;*/
+			z-index: -1;
+			background-size: cover;
+		}
+
+		.heartLoss {
+			background-image: url(dislike.png);
+			display: inline-block;
+			height: 32px; /*512px;*/
+			width: 32px; /*512px;*/
+			z-index: -1;
+			background-size: cover;
+		}
+
+		.heart {
+			background-image: url(heart.png);
+			display: inline-block;
+			height: 32px; /*512px;*/
+			width: 32px; /*512px;*/
+			z-index: -1;
+			background-size: cover;
+		}
+		/* PNG images from https://www.flaticon.com/search?word=heart */
+		.playaout {
+			color: lightgrey;
+			text-decoration: line-through;
+		}
+
+		.playa {
+			display: inline-block;
+			width: 100%;
+			border: none;
+			padding: 40px 0px 40px 0px;
+			font-size: 28px;
+			text-align: center;
+		}
+
+		.potMissSize {
+			display: inline-block;
+			width: 0px;
+			border: none;
+			background-color: transparent;
+			color: black;
+			padding : 100px 400px;
+			font-size: 28px;
+			cursor: pointer;
+			text-align: center;
+			z-index: 1;
+			text-shadow: 2px 2px red;
+		}
+
+		.pot {
+			display: inline-block;
+			width: 50%;
+			border: none;
+			background-color: #4CAF50;
+			color: white;
+			padding: 100px 200px;
+			font-size: 28px;
+			cursor: pointer;
+			text-align: center;
+		}
+
+			.pot:hover {
+				background-color: #ddd;
+				color: black;
+			}
+
+		.miss {
+			display: inline-block;
+			width: 50%;
+			border: none;
+			background-color: lightgray;
+			color: white;
+			padding: 100px 200px;
+			font-size: 28px;
+			cursor: pointer;
+			text-align: center;
+		}
+
+			.miss:hover {
+				background-color: red;
+				color: black;
+			}
+
+		.potmissconfirm {
+
+		}
+	</style>
+</head>
+<body>
+	<div id="home">
+		<button onclick="startAddPlayer()">ADD PLAYERS</button>
+		<button onclick="gameSetUp()">SETUP GAME</button>
+		<button onclick="xmlLoop()">XML Loop</button>
+		<button id="bob" class="miss" onclick="tester();">Hello</button>
+	</div>
+	<div id="gameSetUp" style="display:none">
+		<button onclick="gameStart()">SET PLAYER ORDER</button>
+		<button onclick="gameSetUpStop()">CANCEL</button>
+		<h1>Who's Playing . . . . </h1>
+		<div id="playerListSelected" class="playerSelect"></div>
+	</div>
+	<div id="playersDiv" style="display:none">
+		<div class="letterblocks">
+			<input type="text" id="pname" style="display:none;visibility:hidden" />
+			<button onclick="addPlayer()">ADD</button>
+			<button onclick="nameAdd(' ');">SPACE</button>
+			<button onclick="rubPlayer()">RUB</button>
+			<span id="pnameSpan" style="position:absolute;top:80px;left:0px;z-index:-1">. . . . . .</span>
+		</div>
+			<div class="letterblocks">
+				<button type="button" onclick="nameAdd('A');">A</button>
+				<button type="button" onclick="nameAdd('B');">B</button>
+				<button type="button" onclick="nameAdd('C');">C</button>
+				<button type="button" onclick="nameAdd('D');">D</button>
+				<button type="button" onclick="nameAdd('E');">E</button>
+				<button type="button" onclick="nameAdd('F');">F</button>
+			</div>
+			<div class="letterblocks">
+				<button type="button" onclick="nameAdd('G');">G</button>
+				<button type="button" onclick="nameAdd('H');">H</button>
+				<button type="button" onclick="nameAdd('I');">I</button>
+				<button type="button" onclick="nameAdd('J');">J</button>
+				<button type="button" onclick="nameAdd('K');">K</button>
+				<button type="button" onclick="nameAdd('L');">L</button>
+			</div>
+			<div class="letterblocks">
+				<button type="button" onclick="nameAdd('M');">M</button>
+				<button type="button" onclick="nameAdd('N');">N</button>
+				<button type="button" onclick="nameAdd('O');">O</button>
+				<button type="button" onclick="nameAdd('P');">P</button>
+				<button type="button" onclick="nameAdd('Q');">Q</button>
+				<button type="button" onclick="nameAdd('R');">R</button>
+			</div>
+			<div class="letterblocks">
+				<button type="button" onclick="nameAdd('S');">S</button>
+				<button type="button" onclick="nameAdd('T');">T</button>
+				<button type="button" onclick="nameAdd('U');">U</button>
+				<button type="button" onclick="nameAdd('V');">V</button>
+				<button type="button" onclick="nameAdd('W');">W</button>
+				<button type="button" onclick="nameAdd('X');">X</button>
+			</div>
+			<div class="letterblocks">
+				<button type="button" onclick="nameAdd('Y');">Y</button>
+				<button type="button" onclick="nameAdd('Z');">Z</button>
+				<button type="button" onclick="nameAdd('0');">0</button>
+				<button type="button" onclick="nameAdd('1');">1</button>
+				<button type="button" onclick="nameAdd('2');">2</button>
+				<button type="button" onclick="nameAdd('3');">3</button>
+			</div>
+			<div class="letterblocks">
+				<button type="button" onclick="nameAdd('4');">4</button>
+				<button type="button" onclick="nameAdd('5');">5</button>
+				<button type="button" onclick="nameAdd('6');">6</button>
+				<button type="button" onclick="nameAdd('7');">7</button>
+				<button type="button" onclick="nameAdd('8');">8</button>
+				<button type="button" onclick="nameAdd('9');">9</button>
+			</div>
+			<ul id="playerList"></ul>
+		</div>
+		<div id="game" style="display:none">
+			<button onclick="shufflePlayers()">SHUFFLE PLAYER ORDER</button>
+			<button onclick="backToGameSetup()">Back to Player Selection</button>
+			<ul id="playerGameList"></ul>
+			<button onclick="gameStartForReal()">S-T-A-R-T K-I-L-L-E-R</button>
+		</div>
+		<div id="final">
+			<p id="InAction"></p>
+			<ul id="playerGameListFinal"></ul>
+			<p id="rawXml"></p>
+		</div>
+		<div id="winner">
+			<ul id="winnerList"></ul>
+		</div>
+		<script>
+			var players = ["JOHN", "FAZ", "TODD", "GARY", "MARY", "HARRY POTTER"]; // holds all players
+			var gamePlayers = []; // holds ONLY players flagged as playing
+			var gamePlayersTemp = [];
+			var totalmoves = 0;// whilst zero, option to shuffle player order is allowed
+			var lives = 3;
+			var livesCount = 0;
+			var livesPlayer = 0;
+			var parser, xmlDoc;
+			var theGame = "";
+			//var currentPlayer = "";
+			//var currentPlayerArrayId = 0;
+			var totalPlayers = 0; // holds the total players playing regardless of whether they have lives or not
+			var totalPlayersLeft = 0;
+			//these used for holding info about the player in loop
+			var playerName = "";
+			var playerLife = 0;
+			var playerId = 0;
+			// these below are used to hold data about the player currently playing
+			var currentPlayerName = "";
+			var currentPlayerLife = 0;
+			var currentPlayerId = 1;
+			var nextPlayerId = 0;
+			var timerId = 0;
+			var confirmTimerId = 0;
+
+			function tester() {
+				var e = document.getElementById("bob");
+				e.className = "potmissconfirm";
+				e.value = 0;
+				setTimeout(function () { your_func(); }, 5000);
+			}
+
+			function your_func() {
+				var e = document.getElementById("bob");
+				e.className = "miss";
+				e.value = 1;
+			}
+
+			function nameAdd(letter) {
+				document.getElementById("pname").value += letter;
+				pnameSpan.innerText = document.getElementById("pname").value;
+			}
+
+			function rubPlayer() {
+				var s = document.getElementById("pname").value;
+				if (s.length > 0) {
+					document.getElementById("pname").value = s.substring(0, (s.length) - 1);
+				}
+				pnameSpan.innerText = document.getElementById("pname").value;
+			}
+
+			function xmlLoop() {
+				parser = new DOMParser();
+				xmlDoc = parser.parseFromString("<players><player><name>maggie</name><life>1</life><id>0</id></player><player><name>bob</name><life>32</life><id>1</id></player><player><name>john</name><life>42</life><id>2</id></player></players>", "text/xml");
+
+				var z = xmlDoc.getElementsByTagName("player");
+				for (var k = 0; k < z.length; k++) {
+					var x = z[k].childNodes;
+					alert(x[0].firstChild.nodeValue);
+					alert(x[1].firstChild.nodeValue);
+					alert(x[2].firstChild.nodeValue);
+				}
+				parser = null;
+			}
+
+			function myMove() {
+				var elem = document.getElementById("actionChangeGrowDiv");
+				var pos = 0;
+				confirmTimerId = setInterval(frame, 5);
+				function frame() {
+					if (pos == screen.width) {
+						clearInterval(id);
+					} else {
+						pos++;
+						elem.style.width = pos + "px";
+					}
+				}
+			}
+
+			var playerPot = function (id) {
+				return function curried_func(e) {
+					//id is currentPlayerId
+					var pot = document.getElementById("actionPot");
+					var miss = document.getElementById("actionMiss");
+					var action = document.getElementById("actionChange");
+					pot.style.display = "none";
+					miss.style.display = "none";
+					document.getElementById("actionChangeDiv").style.display = "block";
+					document.getElementById("actionChangeDiv").style.width = screen.width;
+					document.getElementById("actionChangeDiv").style.zIndex = 2;
+					document.getElementById("actionChangeGrowDiv").style.display = "inline-block";
+					document.getElementById("actionChangeGrowDiv").style.height = "228px";
+					document.getElementById("actionChange").innerText = "Confirming POT . . .";
+					action.style.display = "inline-block";
+					if (action.value == "99") {
+						myMove();
+						timerId = setTimeout(function () { runPlayerPot(pot,miss); }, 5000);
+					}
+				}
+			}
+
+			var playerActionChange = function (id) {
+				return function curried_func(e) {
+					// this stops the timed event . . 
+					clearTimeout(timerId);
+					// . . .and this stops the interval which is the growing width bar . . . 
+					clearInterval(confirmTimerId);
+					document.getElementById("actionChange").value = "99";
+					try {
+						document.getElementById("actionPot").style.display = "inline-block";
+						document.getElementById("actionMiss").style.display = "inline-block";
+						document.getElementById("actionChange").style.display = "none";
+						document.getElementById("actionChangeGrowDiv").style.width = "0px";
+						document.getElementById("actionChangeGrowDiv").style.display = "none";
+						document.getElementById("actionChangeDiv").style.display = "none";
+						document.getElementById("actionChangeDiv").style.zIndex = "-1";
+					} catch{ }
+				}
+			}
+
+			function runPlayerPot(pot,miss) {
+				if (document.getElementById("actionChange").value == "99") {
+					gameSetListInPlay();
+				} else {
+					document.getElementById("actionChange").value = "99";
+				}
+			}
+
+			function runPlayerMiss(pot, miss) {
+				if (document.getElementById("actionChange").value == "99") {
+					// player miss . . . . . 
+					// reduce the players life count . . .
+					currentPlayerLife = parseInt(parseInt(currentPlayerLife) - 1);
+					// update the XML that holds the game situation
+					theGame = theGame.replace("<name>" + currentPlayerName + "</name><life>" + (parseInt(currentPlayerLife) + 1).toString() + "</life>", "<name>" + currentPlayerName + "</name><life>" + ((parseInt(currentPlayerLife))).toString() + "</life>");
+					// Is the player out?
+					if (parseInt(currentPlayerLife) == 0) {
+						var ulWinnerList = document.getElementById("winnerList");
+						var uiWinnerList = document.createElement("li");
+						uiWinnerList.innerText = ordinal_suffix_of(totalPlayersLeft) + " " + currentPlayerName;
+						ulWinnerList.insertBefore(uiWinnerList, ulWinnerList.firstChild);
+						if (totalPlayersLeft == 2) {
+							var medal = document.createElement("span");
+							medal.className = "medalsecond";
+							// add medal to list
+							uiWinnerList.appendChild(medal);
+						}
+						if (totalPlayersLeft == 3) {
+							var medal = document.createElement("span");
+							medal.className = "medalthird";
+							// add medal to list
+							uiWinnerList.appendChild(medal);
+						}
+						totalPlayersLeft = parseInt(totalPlayersLeft) - 1;
+					}
+					gameSetListInPlay();
+				} else {
+					document.getElementById("actionChange").value = "99";
+					try {
+						document.getElementById("actionPot").style.display = "inline-block";
+						document.getElementById("actionMiss").style.display = "inline-block";
+					} catch{ }
+					document.getElementById("actionChange").style.display = "none";
+				}
+			}
+
+			var playerMiss = function (id) {
+				return function curried_func(e) {
+					var pot = document.getElementById("actionPot");
+					var miss = document.getElementById("actionMiss");
+					var action = document.getElementById("actionChange");
+					pot.style.display = "none";
+					miss.style.display = "none";
+					document.getElementById("actionChangeDiv").style.display = "block";
+					document.getElementById("actionChangeDiv").style.width = screen.width;
+					document.getElementById("actionChangeDiv").style.zIndex = 2;
+					document.getElementById("actionChangeGrowDiv").style.display = "inline-block";
+					document.getElementById("actionChangeGrowDiv").style.height = "228px";
+					document.getElementById("actionChange").innerText = "Confirming MISS . . .";
+					action.style.display = "inline-block";
+					if (action.value == "99") {
+						myMove();
+						timerId = setTimeout(function () { runPlayerMiss(pot, miss); }, 5000);
+					}
+				}
+			}
+			// this takes a number and adds st,th etc.. at the end. So 1 becomes 1st, 3 becomes 3rd etc....
+			function ordinal_suffix_of(i) {
+				var j = i % 10,
+					k = i % 100;
+				if (j == 1 && k != 11) {
+					return i + "st";
+				}
+				if (j == 2 && k != 12) {
+					return i + "nd";
+				}
+				if (j == 3 && k != 13) {
+					return i + "rd";
+				}
+				return i + "th";
+			}
+
+			function setCurrentPlayer() {
+				if (totalPlayersLeft == 1) {
+					//alert("we have a winner");
+					document.getElementById("home").style.display = "none";
+					document.getElementById("gameSetUp").style.display = "none";
+					document.getElementById("playersDiv").style.display = "none";
+					document.getElementById("game").style.display = "none";
+					document.getElementById("final").style.display = "none";
+					document.getElementById("winner").style.display = "block";
+					// add the last player as the winner!
+					var ulWinnerList = document.getElementById("winnerList");
+					var uiWinnerList = document.createElement("li");
+
+					uiWinnerList.innerText = ordinal_suffix_of(totalPlayersLeft) + " " + currentPlayerName;
+					ulWinnerList.insertBefore(uiWinnerList, ulWinnerList.firstChild);
+					var medal = document.createElement("span");
+					medal.className = "medalfirst";
+					// add medal to list
+					uiWinnerList.appendChild(medal);
+					return;
+				} else {
+
+					var cp = document.getElementById("InAction");
+					cp.innerHTML = "";
+					var pot = document.createElement("button");
+					var miss = document.createElement("button");
+					var nameSpan = document.createElement("div");
+					var heartsSpan = document.createElement("div");
+					var confirmAction = document.createElement("button");
+					var confirmActionDiv = document.createElement("div");
+					var confirmActionGrowDiv = document.createElement("div");
+					var resultDiv = document.createElement("div");
+
+					resultDiv.style.height = "228px";
+					resultDiv.id = "resultDiv";
+					resultDiv.style.zIndex = "-1";
+
+					confirmActionDiv.height = "228px";
+					confirmActionDiv.id = "actionChangeDiv";
+					confirmActionDiv.style.display = "none";
+					confirmActionDiv.style.position = "relative";
+					confirmActionDiv.style.top = "-228px";
+					confirmActionDiv.style.zIndex = -1;
+
+					confirmActionGrowDiv.height = "228px";
+					confirmActionGrowDiv.id = "actionChangeGrowDiv";
+					confirmActionGrowDiv.style.display = "none";
+					confirmActionGrowDiv.style.position = "absolute";
+					confirmActionGrowDiv.style.zIndex = -1;
+					confirmActionGrowDiv.style.backgroundColor = "red";
+					confirmActionGrowDiv.style.width = "0px";
+
+					confirmAction.style.width = "100%";
+					//confirmAction.style.left = "25%";
+					confirmAction.style.display = "none";
+					confirmAction.value = "99";
+					confirmAction.id = "actionChange";
+					confirmAction.className = "potMissSize";
+					confirmAction.style.position = "absolute";
+					confirmAction.style.zIndex = 1;
+					//confirmAction.innerText = "Confirming . . . ";
+					confirmAction.addEventListener("click", playerActionChange(currentPlayerId));
+
+					pot.innerText = "POT";
+					pot.className = "pot";
+					pot.id = "actionPot";
+					pot.addEventListener("click", playerPot(currentPlayerId));
+
+					miss.className = "miss";
+					miss.id = "actionMiss";
+					miss.innerText = "MISS";
+					miss.addEventListener("click", playerMiss(currentPlayerId));
+					
+					nameSpan.className = "playa";
+					nameSpan.innerText = currentPlayerName;// "Current Player : " + currentPlayerName + " (currentPlayerId:" + currentPlayerId + ")  Lives Remaining : " + currentPlayerLife + " [id:" + currentPlayerId;
+					nameSpan.style.display = "block";
+
+					livesCount = lives;
+					// set hearts
+					while (parseInt(livesCount) > 0) {
+						// i.e. they still have lives
+						if (parseInt(currentPlayerLife) >= parseInt(livesCount)) {
+							// create heart spans . .
+							var heartSpan = document.createElement("span");
+							heartSpan.className = "heart";
+							// add hearts to list . . .
+							heartsSpan.appendChild(heartSpan);
+						} else {
+							// create heart spans . .
+							var heartSpan = document.createElement("span");
+							heartSpan.className = "heartLoss";
+							// add hearts to list . . .
+							heartsSpan.appendChild(heartSpan);
+						}
+						livesCount = parseInt(livesCount) - 1;
+					}
+					heartsSpan.style.display = "block";//new line
+
+					cp.appendChild(nameSpan).appendChild(heartsSpan);
+
+					resultDiv.appendChild(pot);
+					resultDiv.appendChild(miss);
+
+					cp.appendChild(resultDiv);
+					confirmActionDiv.appendChild(confirmActionGrowDiv);
+					confirmActionDiv.appendChild(confirmAction);
+					cp.appendChild(confirmActionDiv);
+
+					rawXml.innerHTML = "";
+					rawXml.innerHTML = "Players Remaining : " + totalPlayersLeft;
+					//rawXml.innerHTML = "totalPlayersLeft:" + totalPlayersLeft + "<p></p><p></p><p></p><p></p>  theGame : " + theGame + "<br>Next Player is : " + nextPlayerId;
+				}
+			}
+
+			function gameSetListInPlay() {
+				nextPlayerId = 0; // reset. This cannot end the function as 0 . . .  PlayerIds start at 1 . . .
+				// this is THE function that determines who is next AND is the game over
+				var ulGame = document.getElementById("playerGameListFinal");
+				ulGame.innerHTML = "";
+				parser = new DOMParser();
+				xmlDoc = parser.parseFromString(theGame, "text/xml");
+
+				var z = xmlDoc.getElementsByTagName("player");
+				for (var k = 0; k < z.length; k++) {
+					var x = z[k].childNodes;
+					playerName = x[0].firstChild.nodeValue;
+					playerLife = parseInt(x[1].firstChild.nodeValue);
+					playerId = parseInt(x[2].firstChild.nodeValue);
+
+
+					// who is the next player?
+					//alert("playerId:" + playerId + " currentPlayerId:" + currentPlayerId + " playerLife:" + playerLife + " nextPlayerId:" + nextPlayerId);
+
+					if (parseInt(nextPlayerId) == 0) {
+						if (parseInt(playerId) > parseInt(currentPlayerId)) {
+							if (parseInt(playerLife) > 0) {
+								nextPlayerId = playerId;
+							}
+						}
+					}
+
+					livesCount = lives;
+					var liGame = document.createElement("li");
+
+					while (parseInt(livesCount) > 0) {
+						// i.e. they still have lives
+						if (parseInt(playerLife) >= parseInt(livesCount)) {
+							// create heart spans . .
+							var heartSpan = document.createElement("span");
+							heartSpan.className = "heart";
+							// add hearts to list . . .
+							liGame.appendChild(heartSpan);
+						} else {
+							// create heart spans . .
+							var heartSpan = document.createElement("span");
+							heartSpan.className = "heartLoss";
+							// add hearts to list . . .
+							liGame.appendChild(heartSpan);
+						}
+						livesCount = parseInt(livesCount) - 1;
+					}
+
+					liGame.appendChild(document.createTextNode(" "+playerName));
+					ulGame.appendChild(liGame);
+				}
+				//alert("0:"+nextPlayerId);
+				if (parseInt(nextPlayerId) == 0) {
+					for (var k = 0; k < z.length; k++) {
+						var x = z[k].childNodes;
+						if (parseInt(currentPlayerId) != parseInt(x[2].firstChild.nodeValue)) {
+							if (parseInt(x[1].firstChild.nodeValue) > 0) {
+								nextPlayerId = parseInt(x[2].firstChild.nodeValue);
+								//currentPlayerName = x[0].firstChild.nodeValue;
+								//currentPlayerLife = parseInt(x[1].firstChild.nodeValue);
+								//currentPlayerId = parseInt(x[2].firstChild.nodeValue);
+								break;
+							}
+						}
+					}
+				}
+				//alert("1:" + nextPlayerId);
+
+				// set the 'Current Player' variables here
+				for (var k = 0; k < z.length; k++) {
+					var x = z[k].childNodes;
+					if (parseInt(nextPlayerId) == parseInt(x[2].firstChild.nodeValue)) {
+						currentPlayerName = x[0].firstChild.nodeValue;
+						currentPlayerLife = parseInt(x[1].firstChild.nodeValue);
+						currentPlayerId = parseInt(x[2].firstChild.nodeValue);
+						break;
+					}
+				}
+
+				parser = null;
+				setCurrentPlayer();
+			}
+
+			function gameStartForReal() {
+				currentPlayerId = 1; // holds a sequential Id for the player
+				//currentPlayer = "";
+				theGame = "<players>";
+				document.getElementById("home").style.display = "none";
+				document.getElementById("gameSetUp").style.display = "none";
+				document.getElementById("playersDiv").style.display = "none";
+				document.getElementById("game").style.display = "none";
+
+				var ulGame = document.getElementById("playerGameListFinal");
+
+				var arrayLengthGameReal = gamePlayers.length;
+				for (var i = 0; i < arrayLengthGameReal; i++) {
+					// 'currentPlayerName' is always the FIRST player out the hat . . .
+					if (currentPlayerName == "") {
+						//currentPlayer = "<player><name>" + gamePlayers[i] + "</name><life>" + lives.toString() + "</life></player>";
+						currentPlayerName = gamePlayers[i];
+						currentPlayerLife = parseInt(lives);
+					}
+					// 'theGame' is a complete XML string of players that will track lives etc...
+					theGame += "<player><name>" + gamePlayers[i] + "</name><life>" + lives.toString() + "</life><id>" + currentPlayerId.toString() + "</id></player>";
+
+					// add player to list . . .
+					var liGame = document.createElement("li");
+					currentPlayerId = parseInt(currentPlayerId) + 1;
+
+					livesCount = lives;
+					while (parseInt(livesCount) > 0) {
+						// create heart spans . .
+						var heartSpan = document.createElement("span");
+						heartSpan.className = "heart";
+						// add hearts to list . . .
+						liGame.appendChild(heartSpan);
+						livesCount = parseInt(livesCount) - 1;
+					}
+
+					liGame.appendChild(document.createTextNode(" "+gamePlayers[i]));
+					// now add the list item (with hearts) to the list
+					ulGame.appendChild(liGame);
+
+					totalPlayers = totalPlayers + 1;
+				}
+				totalPlayersLeft = totalPlayers;
+				theGame += "</players>";
+
+				currentPlayerId = 1;
+				setCurrentPlayer();
+			}
+
+			function shufflePlayers() {
+				array = gamePlayers;
+				var currentIndex = array.length, temporaryValue, randomIndex;
+
+				// While there remain elements to shuffle...
+				while (0 !== currentIndex) {
+
+					// Pick a remaining element...
+					randomIndex = Math.floor(Math.random() * currentIndex);
+					currentIndex -= 1;
+
+					// And swap it with the current element.
+					temporaryValue = array[currentIndex];
+					array[currentIndex] = array[randomIndex];
+					array[randomIndex] = temporaryValue;
+				}
+				gamePlayers = [];
+				gamePlayers = array;
+				gameStart();
+			}
+
+			function backToGameSetup() {
+				gamePlayers = [];
+				document.getElementById("home").style.display = "none";
+				document.getElementById("gameSetUp").style.display = "block";
+				document.getElementById("playersDiv").style.display = "none";
+				document.getElementById("game").style.display = "none";
+			}
+
+			function gameStart() {
+				document.getElementById("home").style.display = "none";
+				document.getElementById("gameSetUp").style.display = "none";
+				document.getElementById("playersDiv").style.display = "none";
+				document.getElementById("game").style.display = "block";
+
+				var ulGame = document.getElementById("playerGameList");
+				document.getElementById("playerGameList").innerHTML = "";
+				var arrayLengthGame = gamePlayers.length;
+				for (var i = 0; i < arrayLengthGame; i++) {
+					var liGame = document.createElement("li");
+					liGame.appendChild(document.createTextNode(gamePlayers[i]));
+					ulGame.appendChild(liGame);
+				}
+			}
+
+			function gameSetUpStop() {
+				document.getElementById("home").style.display = "block";
+				document.getElementById("gameSetUp").style.display = "none";
+				document.getElementById("game").style.display = "none";
+				document.getElementById("playersDiv").style.display = "none";
+			}
+
+			var checkFunc = function (someVar, x) {
+				return function curried_func(e) {
+					// do something here
+					var lfckv = x.checked;
+					if (lfckv == true) {
+						//alert("add " + someVar);
+						gamePlayers.push(someVar);
+					}
+					else {
+						var index = gamePlayers.indexOf(someVar);
+						if (index !== -1) { gamePlayers.splice(index, 1) };
+						//alert("remove " + someVar);
+					}
+				}
+			}
+
+			var butFunc = function (someVar, x) {
+				return function curried_func(e) {
+					// as this is a button passing a value it means when 1 is passed in it means the player is NOT currently selected . . .
+					var lfckv = x.value;
+					if (lfckv == 1) {
+						gamePlayers.push(someVar);
+						x.value = 0;
+						x.className = "playerSelected";
+					}
+					else {
+						var index = gamePlayers.indexOf(someVar);
+						if (index !== -1) { gamePlayers.splice(index, 1) };
+						x.value = 1;
+						x.className = "playerSelect";
+					}
+				}
+			}
+
+			function gameSetUp() {
+				document.getElementById("playersDiv").style.display = "none";
+				document.getElementById("home").style.display = "none";
+				document.getElementById("gameSetUp").style.display = "block";
+				document.getElementById("playerListSelected").innerHTML = "";
+
+				var ul = document.getElementById("playerListSelected");
+				var arrayLength = players.length;
+				for (var i = 0; i < arrayLength; i++) {
+					var pl = players[i];
+					//var li = document.createElement("li");
+					//var lb = document.createElement("label");
+					//var checkbox = document.createElement('input');
+					var butt = document.createElement("button");
+
+					// label
+					//lb.innerText = pl;
+
+					// checkbox
+					//checkbox.type = "checkbox";
+					//checkbox.name = pl;
+					//checkbox.value = pl;
+					//checkbox.addEventListener("click", checkFunc(pl, checkbox));
+
+					butt.type = "button";
+					butt.innerText = pl;
+					butt.className = "playerSelect";
+					butt.value = 1;
+					butt.addEventListener("click", butFunc(pl, butt));
+
+					//li.appendChild(lb);
+					//li.appendChild(checkbox);
+					//li.appendChild(butt);
+					ul.appendChild(butt);
+				}
+			}
+
+			function startAddPlayer() {
+				document.getElementById("playersDiv").style.display = "block";
+				document.getElementById("pname").focus();
+			}
+
+			function addPlayer() {
+				players.push(document.getElementById("pname").value);
+				document.getElementById("pname").value = "";
+
+				var ul = document.getElementById("playerList");
+				document.getElementById("playerList").innerHTML = "";
+				var arrayLength = players.length;
+				for (var i = 0; i < arrayLength; i++) {
+					var li = document.createElement("li");
+					li.appendChild(document.createTextNode(players[i]));
+					ul.appendChild(li);
+				}
+			}
+		</script>
+
+</body>
+</html>
