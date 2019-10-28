@@ -1,855 +1,2688 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-	<link href='https://fonts.googleapis.com/css?family=Press+Start+2P' rel='stylesheet'>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<style>
-		html {
-			background-image: linear-gradient(azure, lavenderblush);
-			width: 100%;
-			height: 100%;
-			background-attachment: fixed;
-		}
-		* {
-			font-family: 'Press Start 2P';
-			font-size: 22px;
-			color: black;
-			text-shadow: 2px 2px red;
-		}
+    <title>KILLER</title>
+    <link href='https://fonts.googleapis.com/css?family=Press+Start+2P' rel='stylesheet' />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+            html {
+                background-image: linear-gradient(to right,#411616, black);
+                width: 100%;
+                height: 100%;
+                background-attachment: fixed;
+            }
 
-		.letterblocks {
-			font-size: 50px;
+            * {
+                font-family: 'Press Start 2P';
+                color: white;
+                text-shadow: 3px 3px red;
+                font-size: 32px;
+                box-sizing: border-box; /* purely for the player selection screen*/
+            }
 
-		}
-		.letterblocks button {
-			font-size: 22px;
-			padding: 50px 50px 50px 50px;
-			background: none;
-			border: none;
-			cursor: pointer;
-			outline: none;
-		}
-		.playerSelect {
-			font-size: 20px;
-			padding: 50px 50px 50px 50px;
-			background: none;
-			border: none;
-			cursor: pointer;
-			outline: none;
-		}
+        .helpdiv {
+            position: absolute;
+            z-index: 100;
+            left: 1%;
+            width: 98%;
+            top: 1%;
+            height: 98%;
+            border-radius: 10px;
+            border: 2px solid red;
+            padding: 10px;
+            background-image: linear-gradient(to right,#411616, black);
+        }
 
-		.playerSelected {
-			font-size: 20px;
-			padding: 50px 50px 50px 50px;
-			background: none;
-			border: none;
-			cursor: pointer;
-			outline: none;
-			font-weight: bolder;
-			text-shadow: 2px 2px #ff0000;
-		}
+            .helpdiv h1 {
+                font-size: 22px;
+            }
+            .helpdiv h2 {
+                font-size: 14px;
+                padding-bottom: 20px;
+                text-shadow: 1px 1px black;
+            }
+            .bottomBar {
+                background-color: transparent;
+                text-align: center;
+                width: 100%;
+                margin: 0 auto;
+                padding-top: 50px;
+                position: fixed;
+                left: 0px;
+                bottom: 0px;
+                z-index: 1;
+            }
 
-		.letterblocks button:hover {
-		
-		}
+                .bottomBar button {
+                    font-size: 24px;
+                    padding: 10px 10px 10px 10px;
+                    background: none;
+                    border: none;
+                    cursor: pointer;
+                    outline: none;
+                    text-shadow: 3px 3px #ff0000;
+                }
 
-			.letterblocks span {
-				position:absolute;
-				padding: 50px 50px 50px 50px;
-				font-size: 50px;
-				background: none;
-				border: none;
-				cursor:default;
-			}
+            .topBar {
+                height: 80px;
+                background-color: transparent;
+                text-align: center;
+            }
 
-		.medalfirst {
-			background-image: url(first.png);
-			display: inline-block;
-			height: 32px; /*512px;*/
-			width: 32px; /*512px;*/
-			z-index: -1;
-			background-size: cover;
-		}
+                .topBar button {
+                    font-size: 36px;
+                    padding: 10px 10px 10px 10px;
+                    background: none;
+                    border: none;
+                    cursor: pointer;
+                    outline: none;
+                    text-shadow: 3px 3px #ff0000;
+                }
 
-		.medalsecond {
-			background-image: url(second.png);
-			display: inline-block;
-			height: 32px; /*512px;*/
-			width: 32px; /*512px;*/
-			z-index: -1;
-			background-size: cover;
-		}
+            .topHeading {
+                height: 50px;
+                text-align: center;
+                padding-top: 10px;
+                font-size: 34px;
+                text-shadow: 3px 3px red;
+                color: yellow;
+            }
 
-		.medalthird {
-			background-image: url(third.png);
-			display: inline-block;
-			height: 32px; /*512px;*/
-			width: 32px; /*512px;*/
-			z-index: -1;
-			background-size: cover;
-		}
+                .topHeading span {
+                    height: 50px;
+                    text-align: center;
+                    padding-top: 10px;
+                    font-size: 34px;
+                    text-shadow: 3px 3px red;
+                    color: yellow;
+                }
 
-		.heartLoss {
-			background-image: url(dislike.png);
-			display: inline-block;
-			height: 32px; /*512px;*/
-			width: 32px; /*512px;*/
-			z-index: -1;
-			background-size: cover;
-		}
+            ul {
+                list-style-type: none;
+                margin: 0px;
+                padding: 0px;
+            }
 
-		.heart {
-			background-image: url(heart.png);
-			display: inline-block;
-			height: 32px; /*512px;*/
-			width: 32px; /*512px;*/
-			z-index: -1;
-			background-size: cover;
-		}
-		/* PNG images from https://www.flaticon.com/search?word=heart */
-		.playaout {
-			color: lightgrey;
-			text-decoration: line-through;
-		}
+            .letterblocks {
+                font-size: 50px;
+            }
 
-		.playa {
-			display: inline-block;
-			width: 100%;
-			border: none;
-			padding: 40px 0px 40px 0px;
-			font-size: 28px;
-			text-align: center;
-		}
+                .letterblocks button {
+                    font-size: 22px;
+                    /*padding: 50px 50px 50px 50px;*/
+                    padding: 30px 30px 30px 30px;
+                    background: none;
+                    border: none;
+                    cursor: pointer;
+                    outline: none;
+                }
 
-		.potMissSize {
-			display: inline-block;
-			width: 0px;
-			border: none;
-			background-color: transparent;
-			color: black;
-			padding : 100px 400px;
-			font-size: 28px;
-			cursor: pointer;
-			text-align: center;
-			z-index: 1;
-			text-shadow: 2px 2px red;
-		}
+            .addPlayerSelect {
+                font-size: 22px;
+                padding: 50px 50px 50px 50px;
+                background: none;
+                border: none;
+                cursor: pointer;
+                outline: none;
+                color: yellow;
+                text-shadow: 3px 3px red;
+            }
 
-		.pot {
-			display: inline-block;
-			width: 50%;
-			border: none;
-			background-color: #4CAF50;
-			color: white;
-			padding: 100px 200px;
-			font-size: 28px;
-			cursor: pointer;
-			text-align: center;
-		}
+        .playerSelectChampion {
+            font-size: 22px;
+            padding: 50px 50px 50px 50px;
+            border: none;
+            cursor: pointer;
+            outline: none;
+            color: #ddd;
+            text-shadow: 3px 3px lightslategrey;
+            opacity: 0.6;
+            background: transparent url(crown.png) 0px 30px no-repeat;
+            background-size: 48px;
+            -webkit-user-select: none;
+        }
 
-			.pot:hover {
-				background-color: #ddd;
-				color: black;
-			}
+        .playerSelectedChampion {
+            font-size: 22px;
+            padding: 50px 50px 50px 50px;
+            background: transparent url(crown.png) 0px 30px no-repeat;
+            background-size: 48px;
+            border: none;
+            cursor: pointer;
+            outline: none;
+            text-shadow: 3px 3px #ff0000;
+            -webkit-user-select: none;
+            /*text-shadow: 0 0 3px red, 0 0 5px #ff0000;*/
+        }
 
-		.miss {
-			display: inline-block;
-			width: 50%;
-			border: none;
-			background-color: lightgray;
-			color: white;
-			padding: 100px 200px;
-			font-size: 28px;
-			cursor: pointer;
-			text-align: center;
-		}
+        .playerSelect {
+            font-size: 22px;
+            padding: 50px 50px 50px 50px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            outline: none;
+            color: #ddd;
+            text-shadow: 3px 3px lightslategrey;
+            opacity: 0.6;
+            -webkit-user-select: none;
+        }
 
-			.miss:hover {
-				background-color: red;
-				color: black;
-			}
+        .playerSelected {
+            font-size: 22px;
+            padding: 50px 50px 50px 50px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            outline: none;
+            -webkit-user-select: none;
+            /*font-weight: bolder;*/
+            text-shadow: 3px 3px #ff0000;
+            /*text-shadow: 0 0 3px red, 0 0 5px #ff0000;*/
+        }
 
-		.potmissconfirm {
+            .letterblocks button:hover {
+            }
 
-		}
-	</style>
+            .heartLoss {
+                background-image: url(dislike.png);
+                display: inline-block;
+                height: 32px; /*512px;*/
+                width: 32px; /*512px;*/
+                z-index: -1;
+                background-size: cover;
+            }
+
+            .heart {
+                background-image: url(heart.png);
+                display: inline-block;
+                height: 32px; /*512px;*/
+                width: 32px; /*512px;*/
+                z-index: -1;
+                background-size: cover;
+            }
+
+            .heartCrown {
+                background-image: url(crown.png);
+                display: inline-block;
+                height: 32px; /*512px;*/
+                width: 32px; /*512px;*/
+                z-index: -1;
+                background-size: cover;
+            }
+
+                .heartCrown span {
+                    padding-left: 50px;
+                }
+
+            .streakName {
+                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+                font-size: 16px;
+                text-align: center;
+                padding: 10px 0px 10px 0px;
+                text-shadow: 0px 0px red;
+                position: relative;
+                left: 11px;
+                top: -10px;
+                color: black;
+            }
+
+            .potstreak1 {
+                background-image: url(ball.png),linear-gradient(to right,white,#FFFF00);
+                display: inline-block;
+                height: 32px; /*512px;*/
+                width: 32px; /*512px;*/
+                z-index: -1;
+                background-size: cover;
+                border-radius: 50%;
+                color: black;
+            }
+
+            .potstreak2 {
+                background-image: url(ball.png),linear-gradient(to right,#FFFF00, #FFCC00);
+                display: inline-block;
+                height: 32px; /*512px;*/
+                width: 32px; /*512px;*/
+                z-index: -1;
+                background-size: cover;
+                border-radius: 50%;
+                color: black;
+            }
+
+            .potstreak3 {
+                background-image: url(ball.png),linear-gradient(to right,#FFCC00, #FF9900);
+                display: inline-block;
+                height: 32px; /*512px;*/
+                width: 32px; /*512px;*/
+                z-index: -1;
+                background-size: cover;
+                border-radius: 50%;
+                color: black;
+            }
+
+            .potstreak4 {
+                background-image: url(ball.png),linear-gradient(to right,#FF9900, #FF6600);
+                display: inline-block;
+                height: 32px; /*512px;*/
+                width: 32px; /*512px;*/
+                z-index: -1;
+                background-size: cover;
+                border-radius: 50%;
+                color: white;
+            }
+
+            .potstreak5 {
+                background-image: url(ball.png),linear-gradient(to right,#FF6600, #FF3300);
+                display: inline-block;
+                height: 32px; /*512px;*/
+                width: 32px; /*512px;*/
+                z-index: -1;
+                background-size: cover;
+                border-radius: 50%;
+                color: white;
+            }
+
+            .potstreak6 {
+                background-image: url(ball.png),linear-gradient(to right,#FF3300, #FF0000);
+                display: inline-block;
+                height: 32px; /*512px;*/
+                width: 32px; /*512px;*/
+                z-index: -1;
+                background-size: cover;
+                border-radius: 50%;
+                color: white;
+            }
+
+            .potstreak7 {
+                background-image: url(ball.png),linear-gradient(to right,#FF3300, #FF0000);
+                display: inline-block;
+                height: 32px; /*512px;*/
+                width: 32px; /*512px;*/
+                z-index: -1;
+                background-size: cover;
+                border-radius: 50%;
+                color: white;
+            }
+
+            .potstreak8 {
+                background-image: url(ball.png),linear-gradient(to right,#FF3300, #FF0000);
+                display: inline-block;
+                height: 32px; /*512px;*/
+                width: 32px; /*512px;*/
+                z-index: -1;
+                background-size: cover;
+                border-radius: 50%;
+                color: white;
+            }
+
+            .potstreak9 {
+                background-image: url(ball.png),linear-gradient(to right,#FF3300, #FF0000);
+                display: inline-block;
+                height: 32px; /*512px;*/
+                width: 32px; /*512px;*/
+                z-index: -1;
+                background-size: cover;
+                border-radius: 50%;
+                color: white;
+            }
+
+            .potstreak10 {
+                background-image: url(ball.png),linear-gradient(to right,#FF3300, #FF0000);
+                display: inline-block;
+                height: 32px; /*512px;*/
+                width: 32px; /*512px;*/
+                z-index: -1;
+                background-size: cover;
+                border-radius: 50%;
+                color: white;
+            }
+
+            .potstreak11 {
+                background-image: url(fire.gif);
+                background-size: cover;
+                border-radius: 50%;
+                display: inline-block;
+                height: 32px; /*512px;*/
+                width: 32px; /*512px;*/
+                z-index: -1;
+                background-color: transparent;
+                -webkit-animation-name: fade;
+                -webkit-animation-iteration-count: infinite;
+                -webkit-animation-duration: 3s;
+                -webkit-animation-delay: 3s;
+                animation-name: fade;
+                animation-iteration-count: infinite;
+                animation-duration: 3s;
+                animation-delay: 3s;
+                color: black;
+            }
+
+            /*
+            .fadein {
+                position: absolute;
+                top: 0px;
+                left: 50%;
+                margin: auto;
+            }
+
+                .fadein img {
+                    position: absolute;
+                    left: -65px;
+                    top: 0;
+                    -webkit-animation-name: fade;
+                    -webkit-animation-iteration-count: infinite;
+                    -webkit-animation-duration: 6s;
+                    animation-name: fade;
+                    animation-iteration-count: infinite;
+                    animation-duration: 6s;
+                }*/
+
+            @-webkit-keyframes fade {
+                0% {
+                    opacity: 1;
+                    background-image: url(ball.png),linear-gradient(to right,#a67c00, #bf9b30);
+                    background-size: cover;
+                    border-radius: 50%;
+                }
+
+                9% {
+                    opacity: 1;
+                    background-image: url(fire.gif),linear-gradient(to right,#bf9b30, #ffbf00);
+                    background-size: cover;
+                    border-radius: 50%;
+                    background-color: transparent;
+                }
+
+                18% {
+                    opacity: 1;
+                    background-image: url(ball.png),linear-gradient(to right,#ffbf00, #ffcf40);
+                    background-size: cover;
+                    border-radius: 50%;
+                }
+
+                27% {
+                    opacity: 1;
+                    background-image: url(fire.gif),linear-gradient(to right,#ffcf40, #ffdc73);
+                    background-size: cover;
+                    border-radius: 50%;
+                    background-color: transparent;
+                }
+
+                36% {
+                    opacity: 1;
+                    background-image: url(ball.png),linear-gradient(to right,##ffdc73, #ffcf40);
+                    background-size: cover;
+                    border-radius: 50%;
+                }
+
+                45% {
+                    opacity: 1;
+                    background-image: url(fire.gif),linear-gradient(to right,#ffcf40, #ffbf00);
+                    background-size: cover;
+                    border-radius: 50%;
+                    background-color: transparent;
+                }
+
+                54% {
+                    opacity: 1;
+                    background-image: url(ball.png),linear-gradient(to right,#ffbf00, #bf9b30);
+                    background-size: cover;
+                    border-radius: 50%;
+                }
+
+                63% {
+                    opacity: 1;
+                    background-image: url(fire.gif),linear-gradient(to right,#bf9b30, #a67c00);
+                    background-size: cover;
+                    border-radius: 50%;
+                    background-color: transparent;
+                }
+
+                72% {
+                    opacity: 1;
+                    background-image: url(ball.png),linear-gradient(to right,#a67c00, #bf9b30);
+                    background-size: cover;
+                    border-radius: 50%;
+                }
+
+                81% {
+                    opacity: 1;
+                    background-image: url(fire.gif),linear-gradient(to right,#bf9b30, #ffbf00);
+                    background-size: cover;
+                    border-radius: 50%;
+                    background-color: transparent;
+                }
+
+                90% {
+                    opacity: 1;
+                    background-image: url(ball.png),linear-gradient(to right,#ffbf00, #ffcf40);
+                    background-size: cover;
+                    border-radius: 50%;
+                }
+
+                100% {
+                    opacity: 1;
+                    background-image: url(ball.png),linear-gradient(to right, #ffcf40,#ffdc73);
+                    background-size: cover;
+                    border-radius: 50%;
+                }
+            }
+
+            /*
+            @keyframes fade {
+                0% {
+                    opacity: 0;
+                    background-image: url(fire.gif);
+                    background-size: cover;
+                    border-radius: 50%;
+                }
+
+                20% {
+                    opacity: 1;
+                    background-image: url(fire.gif),linear-gradient(to right,#FF3300, #FF0000);
+                    background-size: cover;
+                    border-radius: 50%;
+                }
+
+                33% {
+                    opacity: 1;
+                    background-image: url(fire.gif),linear-gradient(to right,#FF3300, #FF0000);
+                    background-size: cover;
+                    border-radius: 50%;
+                }
+
+                53% {
+                    opacity: 0;
+                    background-image: url(fire.gif),linear-gradient(to right,#FF3300, #FF0000);
+                    background-size: cover;
+                    border-radius: 50%;
+                }
+
+                100% {
+                    opacity: 0;
+                    background-image: url(fire.gif),linear-gradient(to right,#FF3300, #FF0000);
+                    background-size: cover;
+                    border-radius: 50%;
+                }
+            }*/
+
+
+
+            .potstreakOff {
+                display: inline-block;
+                height: 32px; /*512px;*/
+                width: 32px; /*512px;*/
+                z-index: -1;
+                background-size: cover;
+                background-color: transparent;
+            }
+            /* PNG images from https://www.flaticon.com/search?word=heart */
+            .playaout {
+                color: lightgrey;
+                text-decoration: line-through;
+            }
+
+            .playa {
+                display: inline-block;
+                width: 100%;
+                border: none;
+                padding: 0px 0px 40px 0px;
+                font-size: 56px;
+                text-align: center;
+            }
+
+            .playaChamp {
+                width: 100%;
+                border: none;
+                padding: 10px 10px 40px 10px;
+                font-size: 56px;
+                text-align: center;
+                background: transparent url(crown.png) 0px 0px no-repeat;
+                background-size: 64px;
+            }
+
+            .headToHeadAlert {
+                position: absolute;
+                top: 95px;
+                width: 96%;
+                border: none;
+                padding: 0px 0px 0px 0px;
+                font-size: 28px;
+                text-align: center;
+            }
+
+            .headToHeadTitleVs {
+                position: absolute;
+                top: 95px;
+                left: 10%;
+                width: 80%;
+                border: none;
+                padding: 0px 0px 0px 0px;
+                font-size: 28px;
+                text-align: center;
+            }
+
+            .headToHeadTitleLeft {
+                position: absolute;
+                top: 95px;
+                width: 41%;
+                border: none;
+                padding: 0px 0px 0px 0px;
+                font-size: 28px;
+                text-align: right;
+            }
+
+            .headToHeadTitleRight {
+                position: absolute;
+                top: 95px;
+                left: 57%;
+                width: 45%;
+                border: none;
+                padding: 0px 0px 0px 0px;
+                font-size: 28px;
+                text-align: left;
+            }
+
+            .suddendeathClass {
+                display: inline-block;
+                width: 100%;
+                border: none;
+                padding: 0px 0px 0px 0px;
+                font-size: 28px;
+                text-align: center;
+            }
+
+            .potMissSize {
+                display: inline-block;
+                width: 0px;
+                border: none;
+                background-color: transparent;
+                color: white;
+                padding: 100px 200px;
+                font-size: 28px;
+                cursor: pointer;
+                text-align: center;
+                z-index: 1;
+                text-shadow: 3px 3px red;
+            }
+
+            .pot {
+                display: inline-block;
+                width: 50%;
+                border: none;
+                background-color: #4CAF50;
+                color: white;
+                padding: 100px 100px;
+                font-size: 32px;
+                cursor: pointer;
+                text-align: center;
+                height: 228px;
+                max-height: 228px;
+                min-height: 228px;
+                white-space: nowrap;
+            }
+
+                .pot:hover {
+                    background-color: #ddd;
+                    color: black;
+                }
+
+            .miss {
+                display: inline-block;
+                width: 50%;
+                border: none;
+                background-color: lightgray;
+                color: white;
+                padding: 100px 100px;
+                font-size: 32px;
+                cursor: pointer;
+                text-align: center;
+                height: 228px;
+                max-height: 228px;
+                min-height: 228px;
+                white-space: nowrap;
+            }
+
+                .miss:hover {
+                    background-color: red;
+                    color: black;
+                }
+
+            .potmissconfirm {
+                color: white;
+            }
+
+            .breakOffChamp {
+                background-image: url(crown.png);
+                display: inline-block;
+                height: 56px;
+                width: 56px;
+                z-index: -1;
+                background-size: cover;
+                padding: 0px 0px 0px 0px;
+            }
+
+            .breakOff {
+                background-image: url(break.png);
+                display: inline-block;
+                height: 56px;
+                width: 56px;
+                z-index: -1;
+                background-size: cover;
+                padding: 0px 0px 0px 0px;
+            }
+
+            .medalFirst {
+                background-image: url(crown.png);
+                display: inline-block;
+                height: 64px;
+                width: 64px;
+                z-index: -1;
+                background-size: cover;
+            }
+
+            .medalFirstName {
+                font-size: 56px;
+                display: inline-block;
+                height: 96px;
+                width: 1000px;
+                padding-left: 80px;
+                padding-top: 5px;
+            }
+
+            .medalSecond {
+                background-image: url(second.png);
+                display: inline-block;
+                height: 64px; /*512px;*/
+                width: 64px; /*512px;*/
+                z-index: -1;
+                background-size: cover;
+            }
+
+            .medalSecondFirstName {
+                font-size: 48px;
+                display: inline-block;
+                height: 96px;
+                width: 1000px;
+                padding-left: 80px;
+                padding-top: 10px;
+            }
+
+            .medalThird {
+                background-image: url(third.png);
+                display: inline-block;
+                height: 64px; /*512px;*/
+                width: 64px; /*512px;*/
+                z-index: -1;
+                background-size: cover;
+            }
+
+            .medalThirdFirstName {
+                font-size: 48px;
+                display: inline-block;
+                height: 96px;
+                width: 1000px;
+                padding-left: 80px;
+                padding-top: 10px;
+            }
+
+            .logoClass span {
+                display: inline-block;
+                border: none;
+                background-color: transparent;
+                cursor: pointer;
+                text-align: center;
+                text-shadow: 3px 3px red;
+                color: white;
+                outline: none;
+                font-size: 16px;
+                padding: 16px 0px 0px 0px;
+            }
+
+            .splashbutton {
+                display: inline-block;
+                border: none;
+                background-color: transparent;
+                cursor: pointer;
+                text-align: center;
+                text-shadow: 3px 3px red;
+                color: white;
+                outline: none;
+                padding-bottom: 200px;
+            }
+
+            .optionButtonAddPlayer {
+                background-image: url(happy.png);
+                display: inline-block;
+                border: none;
+                background-color: transparent;
+                cursor: pointer;
+                text-align: center;
+                text-shadow: 3px 3px red;
+                color: black;
+                outline: none;
+                padding-bottom: 100px;
+            }
+
+        .shuffle {
+            display: inline-block;
+            background-image: url(shuffle.png);
+            background-repeat: no-repeat;
+            display: inline-block;
+            height: 42px;
+            width: 42px;
+            background-size: 42px;
+            z-index: -1;
+            /*background-size: cover;*/
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            color: white;
+            outline: none;
+            filter: invert(100%);
+        }
+
+            /* Create three equal columns that floats next to each other */
+            .column {
+                float: left;
+                padding: 10px;
+            }
+
+            /* Clear floats after the columns */
+            .row:after {
+                content: "";
+                display: table;
+                clear: both;
+            }
+
+            .circle {
+                background-color: #f1cb55;
+                border: 2px dotted grey;
+                height: 32px;
+                border-radius: 50%;
+                -moz-border-radius: 50%;
+                -webkit-border-radius: 50%;
+                width: 32px;
+                color: black;
+                text-shadow: 1px 1px black;
+                font-size: 32px;
+            }
+
+
+        .loserdiv {
+            z-index:1;
+            position: absolute;
+            padding-bottom: 20px;
+            width: 150px;
+            right: 0px;
+            height: 300px;
+            top: 380px;
+            background-image: url(skull.png);
+            background-repeat: no-repeat;
+            background-size: 51px;
+            background-color: transparent;
+            background-position: 50% 0%;
+            cursor: pointer;
+            color: white;
+            outline: none;
+            filter: invert(100%);
+        }
+
+        .loserlistclass {
+            list-style-type: none;
+            margin: 0px;
+            padding: 0px;
+        }
+
+            .loserlistclass li {
+                font-size: 20px;
+                filter: invert(1);
+                opacity: 0.5;
+            }
+    </style>
+    <script type="text/javascript">
+
+        function addLoser(name) {
+            var llxx = document.getElementById("loserlist");
+            var uuxx = document.createElement("li");
+            uuxx.innerHTML = name;
+            llxx.appendChild(uuxx);
+        }
+
+        function pickAll() {
+            gamePlayers = players.slice();
+        }
+
+        function pickAllAndPlay() {
+            gamePlayers = players.slice();
+            gameStartForReal();
+            var mm = 1;
+            while (parseInt(mm) < 20) {
+                document.getElementById("actionChange").value = "1";
+                runPlayerMiss(0, 0);
+                mm = parseInt(mm, 0) + 1;
+            }
+            mm = 1;
+            while (parseInt(mm) < 20) {
+                document.getElementById("actionChange").value = "1";
+                runPlayerMiss(0, 0);
+                mm = parseInt(mm, 0) + 1;
+            }
+            mm = 1;
+            while (parseInt(mm) < 18) {
+                document.getElementById("actionChange").value = "1";
+                runPlayerMiss(0, 0);
+                mm = parseInt(mm, 0) + 1;
+            }
+        }
+
+        function setCookie(name, value, days) {
+            var expires = "";
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "") + expires + "; path=/";
+        }
+        function getCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        function setChampion(player) {
+            cChamp = getCookie("champion");
+            cStreak = parseInt(getCookie("championstreak"));
+            if (cChamp == null) {
+                streak = 1;
+                cChamp = player;
+                championstreak = 1;
+                setCookie("champion", player, 365);
+                setCookie("championstreak", "1", 365);
+            } else {
+                if (cChamp == player) {
+                    if (isNaN(cStreak) == "NaN") {
+                        streak = 1;
+                    }
+                    cStreak = parseInt(cStreak) + 1;
+                    cChamp = player;
+                    championstreak = cStreak;
+                    setCookie("champion", player, 365);
+                    setCookie("championstreak", cStreak, 365);
+                } else {
+                    streak = 1;
+                    cChamp = player;
+                    championstreak = 1;
+                    setCookie("champion", player, 365);
+                    setCookie("championstreak", "1", 365);
+                }
+            }
+            cChamp = getCookie("champion");
+            cStreak = parseInt(getCookie("championstreak"));
+        }
+
+        function startThis2() {
+            players.sort();
+            if (cChamp != "") {
+                document.getElementById("wwwx").innerText = " " + cChamp;
+                document.getElementById("champSplash").style.display = "block";
+            }
+        }
+
+        function startThis(callback) {
+            var f = document.getElementById('blink');
+            var blink = setInterval(function () {
+                f.style.display = (f.style.display == 'none' ? '' : 'none');
+            }, 1000);
+            document.getElementById("losers").style.display = "none";
+            document.getElementById("loserlist").innerHTML = "";
+            document.getElementById("splash").style.display = "block";
+            document.getElementById("champSplash").style.display = "block";
+            document.getElementById("hello").addEventListener("click", splashStart(blink));
+            //document.getElementById("hello").addEventListener("touchstart", splashStart(blink));
+            var elem = document.getElementById("hello");
+            var pos = 0;
+            var d = setInterval(frame, 5);
+            function frame() {
+                if (pos == 100) {
+                    try {
+                        clearInterval(d);
+                    } catch (err) {
+                        return;
+                    }
+                } else {
+                    pos++;
+                    elem.style.fontSize = pos + "px";
+                }
+            }
+            try { callback(); }
+            catch (err) { }
+        }
+
+        var
+            loserplayers = [],
+            players = ["CHRIS", "JOANNE", "NEVE", "MAE", "ANNE", "STEVE", "LORRAINE", "JOHN", "SONNY", "RONNIE", "DAISY", "POGUE", "SHELLEY", "ORLA", "FIN", "NOEL", "ETHAN", "CATHEL", "EAMONN"], // holds all players
+            gamePlayers = [], // holds ONLY players flagged as playing
+            gamePlayersTemp = [],
+            totalmoves = 0,// whilst zero, option to shuffle player order is allowed
+            lives = 3,
+            livesCount = 0,
+            livesPlayer = 0,
+            parser,
+            xmlDoc,
+            theGame = "",
+            totalPlayers = 0, // holds the total players playing regardless of whether they have lives or not
+            totalPlayersLeft = 0,
+            //these used for holding info about the player in loop
+            playerName = "",
+            playerLife = 0,
+            playerId = 0,
+            //number of pots on a row.This will increment until they miss!
+            playerPotsInRow = 0,
+            //number of MISSES on a row.This will increment until they pot!
+            playerMissInRow = 0,
+            //a series of ONEs and ZEROs i.e. 00100100100100111 with 1 meaning a POT and a 0 meaning a MISS so we fully track them through the entire game.
+            playerHistory = "Z",
+            playerBestStreak = 0,
+            // these below are used to hold data about the player currently playing
+            currentPlayerName = "",
+            currentPlayerLife = 0,
+            currentPlayerId = 1,
+            //number of pots on a row.This will increment until they miss!
+            currentPlayerPotsInRow = 0,
+            //number of MISSES on a row.This will increment until they pot!
+            currentPlayerMissInRow = 0,
+            //a series of ONEs and ZEROs i.e. 00100100100100111 with 1 meaning a POT and a 0 meaning a MISS so we fully track them through the entire game.
+            currentPlayerHistory = "Z",
+            currentPlayerBestStreak = 0,
+            nextPlayerId = 0,
+            timerId = 0,
+            confirmTimerId = 0,
+            confirmTime = 2000, //500 (1/2 second) | 1000 (1 second) etc . . . .
+            // 'addNewPlayerInterval' holds the Id for the 'ADD+' option on the player selection screen
+            addNewPlayerInterval = 0,
+            PotStreakCount = 0,
+            finalTable = "",
+            highestStreak = 0,
+            highestStreakInterval = 0,
+            howManyTopStreakPlayers = 0,
+            // potToWin : if 1 AND there are 2 players left AND they only have 1 life each, they MUST pot to WIN or
+            potToWin = 1,
+            headToHeadPlayer1Name = "",
+            headToHeadPlayer1Life = 0,
+            headToHeadPlayer1Id = 1,
+            //number of pots on a row.This will increment until they miss!
+            headToHeadPlayer1PotsInRow = 0,
+            //number of MISSES on a row.This will increment until they pot!
+            headToHeadPlayer1MissInRow = 0,
+            //a series of ONEs and ZEROs i.e. 00100100100100111 with 1 meaning a POT and a 0 meaning a MISS so we fully track them through the entire game.
+            headToHeadPlayer1History = "Z",
+            headToHeadPlayer1BestStreak = 0,
+            headToHeadPlayer2Name = "",
+            headToHeadPlayer2Life = 0,
+            headToHeadPlayer2Id = 1,
+            //number of pots on a row.This will increment until they miss!
+            headToHeadPlayer2PotsInRow = 0,
+            //number of MISSES on a row.This will increment until they pot!
+            headToHeadPlayer2MissInRow = 0,
+            //a series of ONEs and ZEROs i.e. 00100100100100111 with 1 meaning a POT and a 0 meaning a MISS so we fully track them through the entire game.
+            headToHeadPlayer2History = "Z",
+            headToHeadPlayer2BestStreak = 0,
+            headToHead = 0,
+            headToHeadPlayer1Pot = 0,
+            headToHeadPlayer2Pot = 0,
+            addH2HInterval = 0,
+            headToHeadBannerInfo = "",
+            deleteTimer = 0,
+            addCurrentPlayerInterval = 0,
+            cChamp = getCookie("champion"),
+            cStreak = parseInt(getCookie("championstreak")),
+            isChampPlaying = 0;
+
+        function resetEverything(callback) {
+            document.getElementById("logo").style.display = "none";
+            document.getElementById("home").style.display = "none";
+            document.getElementById("gameSetUp").style.display = "none";
+            document.getElementById("playersDiv").style.display = "none";
+            document.getElementById("game").style.display = "none";
+            document.getElementById("final").style.display = "none";
+            document.getElementById("winner").style.display = "none";
+            document.getElementById("splash").style.display = "block";
+            document.getElementById("champSplash").style.display = "block";
+            document.getElementById("winnerList").innerHTML = "";
+            document.getElementById("playerGameListFinal").innerHTML = "";
+            document.getElementById("losers").style.display = "none";
+            document.getElementById("loserlist").innerHTML = "";
+
+            //players = [];// clear array
+            //players = ["CHRIS"; "JOANNE"; "NEVE"; "MAE"; "ANNE"; "STEVE"; "LORRAINE"; "JOHN"; "SONNY"; "RONNIE"; "DAISY"; "POGUE"; "SHELLEY"; "ORLA"; "FIN"; "NOEL"; "ETHAN"; "CATHEL"; "EAMONN HARTE ESQ"]; // holds all players
+            loserplayers = [];
+            gamePlayers = []; // holds ONLY players flagged as playing
+            gamePlayersTemp = [];
+            totalmoves = 0;// whilst zero; option to shuffle player order is allowed
+            lives = 3;
+            livesCount = 0;
+            livesPlayer = 0;
+            theGame = "";
+            totalPlayers = 0; // holds the total players playing regardless of whether they have lives or not
+            totalPlayersLeft = 0;
+            //these used for holding info about the player in loop
+            playerName = "";
+            playerLife = 0;
+            playerId = 0;
+            playerPotsInRow = 0;
+            playerMissInRow = 0;
+            playerHistory = "Z";
+            playerBestStreak = 0;
+            // these below are used to hold data about the player currently playing
+            currentPlayerName = "";
+            currentPlayerLife = 0;
+            currentPlayerId = 1;
+            //number of pots on a row.This will increment until they miss!
+            currentPlayerPotsInRow = 0;
+            //number of MISSES on a row.This will increment until they pot!
+            currentPlayerMissInRow = 0;
+            //a series of ONEs and ZEROs i.e. 00100100100100111 with 1 meaning a POT and a 0 meaning a MISS so we fully track them through the entire game.
+            currentPlayerHistory = "Z";
+            currentPlayerBestStreak = 0;
+            nextPlayerId = 0;
+            timerId = 0;
+            confirmTimerId = 0;
+            confirmTime = 2000; //500 (1/2 second) | 1000 (1 second) etc . . . .
+            // 'addNewPlayerInterval' holds the Id for the 'ADD+' option on the player selection screen
+            addNewPlayerInterval = 0;
+            finalTable = "";
+            highestStreak = 0;
+            highestStreakInterval = 0;
+            howManyTopStreakPlayers = 0;
+            // potToWin : if 1 AND there are 2 players left AND they only have 1 life each; they MUST pot to WIN or
+            potToWin = 1;
+            headToHeadPlayer1Name = "";
+            headToHeadPlayer1Life = 0;
+            headToHeadPlayer1Id = 1;
+            //number of pots on a row.This will increment until they miss!
+            headToHeadPlayer1PotsInRow = 0;
+            //number of MISSES on a row.This will increment until they pot!
+            headToHeadPlayer1MissInRow = 0;
+            //a series of ONEs and ZEROs i.e. 00100100100100111 with 1 meaning a POT and a 0 meaning a MISS so we fully track them through the entire game.
+            headToHeadPlayer1History = "Z";
+            headToHeadPlayer1BestStreak = 0;
+            headToHeadPlayer2Name = "";
+            headToHeadPlayer2Life = 0;
+            headToHeadPlayer2Id = 1;
+            //number of pots on a row.This will increment until they miss!
+            headToHeadPlayer2PotsInRow = 0;
+            //number of MISSES on a row.This will increment until they pot!
+            headToHeadPlayer2MissInRow = 0;
+            //a series of ONEs and ZEROs i.e. 00100100100100111 with 1 meaning a POT and a 0 meaning a MISS so we fully track them through the entire game.
+            headToHeadPlayer2History = "Z";
+            headToHeadPlayer2BestStreak = 0;
+            headToHead = 0;
+            headToHeadPlayer1Pot = 0;
+            headToHeadPlayer2Pot = 0;
+            addH2HInterval = 0;
+            headToHeadBannerInfo = "";
+            deleteTimer = 0;
+            addCurrentPlayerInterval = 0;
+            isChampPlaying = 0;
+
+            try { callback(); }
+            catch (err) { }
+        }
+
+        var splashStart = function (blink) {
+            return function curried_func(e) {
+
+                // stops the blinking start animation . . .
+                if (parseInt(blink) > 0) {
+                    clearInterval(blink);
+                }
+                //document.getElementById("splash").style.visibility = "hidden";
+                document.getElementById("splash").style.display = "none";
+                document.getElementById("champSplash").style.display = "none";
+                document.getElementById("home").style.display = "none";
+                document.getElementById("logo").style.display = "block";
+                gameSetUp("0");
+            };
+        };
+
+        function your_func() {
+            var e = document.getElementById("bob");
+            e.className = "miss";
+            e.value = 1;
+        }
+
+        function nameAdd(letter) {
+            document.getElementById("pname").value += letter;
+            pnameSpan.innerText = document.getElementById("pname").value;
+        }
+
+        function rubPlayer() {
+            var s = document.getElementById("pname").value;
+            if (s.length > 0) {
+                document.getElementById("pname").value = s.substring(0, (s.length) - 1);
+            }
+            pnameSpan.innerText = document.getElementById("pname").value;
+        }
+
+        function myMove(color) {
+            var elem = document.getElementById("actionChangeGrowDiv");
+            if (parseInt(color) == 0) {
+                elem.style.backgroundColor = "green";
+            } else {
+                elem.style.backgroundColor = "red";
+            }
+            var pos = 0;
+            if (parseInt(confirmTimerId) > 0) {
+                clearInterval(confirmTimerId);
+            }
+            confirmTimerId = setInterval(frame, 5);
+            function frame() {
+                if (pos == screen.width) {
+                    try {
+                        clearInterval(confirmTimerId);
+                    } catch (err) {
+                        return;
+                    }
+                } else {
+                    pos++;
+                    pos++; // double speed . . .
+                    elem.style.width = pos + "px";
+                }
+            }
+        }
+
+        // ############################# POT ################################
+        var playerPot = function (id) {
+            return function curried_func(e) {
+
+                //id is currentPlayerId
+                var action = document.getElementById("actionChange");
+                if (action.value == "99") {
+                    action.value = "1";
+                    var pot = document.getElementById("actionPot");
+                    var miss = document.getElementById("actionMiss");
+                    pot.style.display = "none";
+                    miss.style.display = "none";
+                    document.getElementById("actionChangeDiv").style.display = "block";
+                    document.getElementById("actionChangeDiv").style.width = screen.width;
+                    document.getElementById("actionChangeDiv").style.zIndex = 2;
+                    document.getElementById("actionChangeGrowDiv").style.display = "inline-block";
+                    document.getElementById("actionChangeGrowDiv").style.height = "228px";
+                    //document.getElementById("actionChange").className = "potmissconfirm";
+                    document.getElementById("actionChange").innerText = "Confirming POT . . .";
+                    action.style.display = "inline-block";
+                    myMove(0);
+                    if (parseInt(timerId) > 0) {
+                        clearTimeout(timerId);
+                    }
+                    timerId = setTimeout(function () { runPlayerPot(pot, miss); }, confirmTime);
+                } else {
+                    action.value = "99";
+                }
+            };
+        };
+        // ############################# MISS ################################
+        var playerMiss = function (id) {
+            return function curried_func(e) {
+
+                var action = document.getElementById("actionChange");
+                if (action.value == "99") {
+                    action.value = "1";
+                    var pot = document.getElementById("actionPot");
+                    var miss = document.getElementById("actionMiss");
+                    pot.style.display = "none";
+                    miss.style.display = "none";
+                    document.getElementById("actionChangeDiv").style.display = "block";
+                    document.getElementById("actionChangeDiv").style.width = screen.width;
+                    document.getElementById("actionChangeDiv").style.zIndex = 2;
+                    document.getElementById("actionChangeGrowDiv").style.display = "inline-block";
+                    document.getElementById("actionChangeGrowDiv").style.height = "228px";
+                    document.getElementById("actionChange").innerText = "Confirming MISS . . .";
+                    action.style.display = "inline-block";
+                    myMove(1);
+                    if (parseInt(timerId) > 0) {
+                        clearTimeout(timerId);
+                    }
+                    timerId = setTimeout(function () { runPlayerMiss(pot, miss); }, confirmTime);
+                } else {
+                    action.value = "99";
+                }
+            };
+        };
+
+        var playerActionChange = function (id) {
+            return function curried_func(e) {
+
+                // this stops the timed event . .
+                //document.getElementById("rawXml").innerText = "timerId:" + timerId + " confirmTimerId:" + confirmTimerId + " document.getElementById(actionChange).value:" + document.getElementById("actionChange").value;
+
+                if (document.getElementById("actionChange").value == "1") {
+                    if (parseInt(timerId) != 0) {
+                        clearTimeout(timerId);
+                    }
+                    // . . .and this stops the interval which is the growing width bar . . .
+                    if (parseInt(confirmTimerId) != 0) {
+                        clearInterval(confirmTimerId);
+                    }
+                    try {
+                        document.getElementById("actionPot").style.display = "inline-block";
+                        document.getElementById("actionMiss").style.display = "inline-block";
+                        document.getElementById("actionChange").style.display = "none";
+                        document.getElementById("actionChangeGrowDiv").style.width = "0px";
+                        document.getElementById("actionChangeGrowDiv").style.display = "none";
+                        document.getElementById("actionChangeDiv").style.display = "none";
+                        document.getElementById("actionChangeDiv").style.zIndex = "-1";
+                    } catch (err) { }
+                    document.getElementById("actionChange").value = "99";
+                }
+            };
+        };
+
+        function runPlayerPot(pot, miss) {
+            if (document.getElementById("actionChange").value == "1") {
+                var bef = "<name>" + currentPlayerName + "</name><life>" + (parseInt(currentPlayerLife)).toString() + "</life><id>" + parseInt(currentPlayerId).toString() + "</id><p>" + parseInt(parseInt(currentPlayerPotsInRow)).toString() + "</p><m>" + parseInt(currentPlayerMissInRow).toString() + "</m><s>" + currentPlayerHistory + "</s>";
+                var aft = "<name>" + currentPlayerName + "</name><life>" + ((parseInt(currentPlayerLife))).toString() + "</life><id>" + parseInt(currentPlayerId).toString() + "</id><p>" + parseInt(parseInt(currentPlayerPotsInRow) + 1).toString() + "</p><m>0</m><s>" + currentPlayerHistory + "1</s>";
+                theGame = theGame.replace(bef, aft);
+
+                // increment 'currentPlayerPotsInRow'
+                currentPlayerPotsInRow = currentPlayerPotsInRow + 1;
+                // reset 'currentPlayerMissInRow'
+                currentPlayerMissInRow = 0;
+                // append 'currentPlayerHistory'
+                currentPlayerHistory = currentPlayerHistory + "1";
+
+                if (parseInt(headToHead) == 1) {
+                    if (parseInt(headToHeadPlayer1Id) == parseInt(currentPlayerId)) {
+                        headToHeadPlayer1Pot = 1;
+                        headToHeadPlayer2Pot = 0;
+                        headToHeadBannerInfo = headToHeadPlayer2Name + " must pot";
+                        //document.getElementById("suddendeath").innerText = headToHeadPlayer2Name + " must pot or they lose";
+                    }
+                    else if (parseInt(headToHeadPlayer2Id) == parseInt(currentPlayerId) && parseInt(headToHeadPlayer1Pot) == 1) {
+                        // player 1 & player 2 potted
+                        headToHeadPlayer1Pot = 0;
+                        headToHeadPlayer2Pot = 0;
+                        headToHeadBannerInfo = "*BOTH POTTED* " + headToHeadPlayer1Name + " plays again";
+                        //document.getElementById("suddendeath").innerText = "*** BOTH POTTED *** " + headToHeadPlayer1Name + " plays again";
+                    }
+                    else if (parseInt(headToHeadPlayer2Id) == parseInt(currentPlayerId) && parseInt(headToHeadPlayer1Pot) == 0) {
+                        // player 1 MISSED and player 2 potted so player 2 wins!!!!!!!
+                        headToHeadPlayer1Pot = 0;
+                        headToHeadPlayer2Pot = 1;
+
+                        headToHeadBannerInfo = "";
+                        //document.getElementById("suddendeath").innerText = headToHeadPlayer2Name + " WINS!! because " + headToHeadPlayer1Name + " missed [headToHeadPlayer1Pot:" + headToHeadPlayer1Pot + " headToHeadPlayer2Pot:" + headToHeadPlayer2Pot + "]";
+
+                        // run an official MISS for the loser!
+                        document.getElementById("actionChange").value = "1";
+                        headToHead = 0;
+                        currentPlayerId = headToHeadPlayer1Id;
+                        currentPlayerName = headToHeadPlayer1Name;
+                        runPlayerMiss(0, 0);
+                        return;
+                    }
+                }
+                gameSetListInPlay();
+            } else {
+                document.getElementById("actionChange").value = "99";
+            }
+        }
+
+        function runPlayerMiss(pot, miss) {
+            if (document.getElementById("actionChange").value == "1") {
+
+                if (parseInt(headToHead) == 1) {
+                    if (parseInt(headToHeadPlayer1Id) == parseInt(currentPlayerId)) {
+                        headToHeadPlayer1Pot = 0;
+                        headToHeadPlayer2Pot = 0;
+                        headToHeadBannerInfo = "If " + headToHeadPlayer2Name + " pots they win";
+                        //document.getElementById("suddendeath").innerText = "If " + headToHeadPlayer2Name + " pots they will win . . . .";
+
+                        // log the miss but DON'T reduce the life
+                        var beff = "<name>" + currentPlayerName + "</name><life>" + (parseInt(currentPlayerLife)).toString() + "</life><id>" + parseInt(currentPlayerId).toString() + "</id><p>" + parseInt(currentPlayerPotsInRow).toString() + "</p><m>" + parseInt(currentPlayerMissInRow).toString() + "</m><s>" + currentPlayerHistory + "</s>";
+                        var afff = "<name>" + currentPlayerName + "</name><life>" + (parseInt(currentPlayerLife)).toString() + "</life><id>" + parseInt(currentPlayerId).toString() + "</id><p>0</p><m>" + parseInt(parseInt(currentPlayerMissInRow) + 1).toString() + "</m><s>" + currentPlayerHistory + "0</s>";
+                        // update the XML that holds the game situation
+                        theGame = theGame.replace(beff, afff);
+                    }
+                    else if (parseInt(headToHeadPlayer2Id) == parseInt(currentPlayerId) && parseInt(headToHeadPlayer1Pot) == 1) {
+                        // player 1 POTTED and player 2 MISSED so player 1 WINS
+                        headToHeadPlayer1Pot = 1;
+                        headToHeadPlayer2Pot = 0;
+
+                        headToHeadBannerInfo = "";
+                        //document.getElementById("suddendeath").innerText = headToHeadPlayer1Name + " wins!!!!! [headToHeadPlayer1Pot:" + headToHeadPlayer1Pot + " headToHeadPlayer2Pot: " + headToHeadPlayer2Pot+"]";
+
+                        // log the miss but DON'T reduce the life
+                        var beff = "<name>" + currentPlayerName + "</name><life>" + (parseInt(currentPlayerLife)).toString() + "</life><id>" + parseInt(currentPlayerId).toString() + "</id><p>" + parseInt(currentPlayerPotsInRow).toString() + "</p><m>" + parseInt(currentPlayerMissInRow).toString() + "</m><s>" + currentPlayerHistory + "</s>";
+                        var afff = "<name>" + currentPlayerName + "</name><life>" + (parseInt(currentPlayerLife)).toString() + "</life><id>" + parseInt(currentPlayerId).toString() + "</id><p>0</p><m>" + parseInt(parseInt(currentPlayerMissInRow) + 1).toString() + "</m><s>" + currentPlayerHistory + "0</s>";
+                        // update the XML that holds the game situation
+                        theGame = theGame.replace(beff, afff);
+
+                        // run an official MISS for the loser!
+                        document.getElementById("actionChange").value = "1";
+                        headToHead = 0;
+                        currentPlayerId = headToHeadPlayer2Id;
+                        currentPlayerName = headToHeadPlayer2Name;
+                        runPlayerMiss(0, 0);
+                        return;
+                    }
+                    else if (parseInt(headToHeadPlayer2Id) == parseInt(currentPlayerId) && parseInt(headToHeadPlayer1Pot) == 0) {
+                        // player 1 MISSED and player 2 MISSED so continue!
+                        headToHeadPlayer1Pot = 0;
+                        headToHeadPlayer2Pot = 0;
+
+                        headToHeadBannerInfo = "*BOTH MISSED* " + headToHeadPlayer1Name + " plays again";
+                        //document.getElementById("suddendeath").innerText = "*** BOTH MISSED *** "+headToHeadPlayer1Name +" plays again";
+
+                        // log the miss but DON'T reduce the life
+                        var beff = "<name>" + currentPlayerName + "</name><life>" + (parseInt(currentPlayerLife)).toString() + "</life><id>" + parseInt(currentPlayerId).toString() + "</id><p>" + parseInt(currentPlayerPotsInRow).toString() + "</p><m>" + parseInt(currentPlayerMissInRow).toString() + "</m><s>" + currentPlayerHistory + "</s>";
+                        var afff = "<name>" + currentPlayerName + "</name><life>" + (parseInt(currentPlayerLife)).toString() + "</life><id>" + parseInt(currentPlayerId).toString() + "</id><p>0</p><m>" + parseInt(parseInt(currentPlayerMissInRow) + 1).toString() + "</m><s>" + currentPlayerHistory + "0</s>";
+                        // update the XML that holds the game situation
+                        theGame = theGame.replace(beff, afff);
+                    }
+                }
+                else {
+                    // normal MISS code . .
+                    // player miss . . . . .
+                    // reduce the players life count . . .
+                    currentPlayerLife = parseInt(parseInt(currentPlayerLife) - 1);
+
+                    var beff = "<name>" + currentPlayerName + "</name><life>" + (parseInt(currentPlayerLife) + 1).toString() + "</life><id>" + parseInt(currentPlayerId).toString() + "</id><p>" + parseInt(currentPlayerPotsInRow).toString() + "</p><m>" + parseInt(currentPlayerMissInRow).toString() + "</m><s>" + currentPlayerHistory + "</s>";
+                    var afff = "<name>" + currentPlayerName + "</name><life>" + (parseInt(currentPlayerLife)).toString() + "</life><id>" + parseInt(currentPlayerId).toString() + "</id><p>0</p><m>" + parseInt(parseInt(currentPlayerMissInRow) + 1).toString() + "</m><s>" + currentPlayerHistory + "0</s>";
+                    // update the XML that holds the game situation
+                    theGame = theGame.replace(beff, afff);
+                }
+
+                // reset 'currentPlayerPotsInRow'
+                currentPlayerPotsInRow = 0;
+                // increment 'currentPlayerMissInRow'
+                currentPlayerMissInRow = currentPlayerMissInRow + 1;
+                // append 'currentPlayerHistory'
+                currentPlayerHistory = currentPlayerHistory + "0";
+
+                // Is the player out?
+                if (parseInt(currentPlayerLife) == 0) {
+                    var holdHighStreak = 0;
+                    // Workout who has the BEST streak here also . . . .
+                    if (finalTable == "") {
+                        finalTable = "<final>";
+                    }
+
+                    currentPlayerBestStreak = 0;
+                    // attempting here to add pot streak..
+                    while (currentPlayerHistory.length > 1) {
+                        if (Right(currentPlayerHistory, 1) == "1") {
+                            currentPlayerBestStreak = currentPlayerBestStreak + 1;
+                        }
+                        else {
+                            currentPlayerBestStreak = 0;
+                        }
+
+                        if (parseInt(currentPlayerBestStreak) > parseInt(holdHighStreak)) {
+                            holdHighStreak = currentPlayerBestStreak;
+                        }
+
+                        currentPlayerHistory = Left(currentPlayerHistory, (currentPlayerHistory.length) - 1);
+
+                        if (currentPlayerHistory == "Z") {
+                            break;
+                        }
+                    }
+                    /*
+                        finalTable:
+                        n: name
+                        p: final position
+                        c: class name
+                        s: best streak
+                    */
+                    finalTable = finalTable + "<player><n>" + currentPlayerName + "</n><p>" + parseInt(totalPlayersLeft).toString() + "</p><c>what</c><s>" + parseInt(holdHighStreak).toString() + "</s></player>";
+
+                    if (parseInt(holdHighStreak) > 0) {
+                        if (parseInt(holdHighStreak) > parseInt(highestStreak)) {
+                            highestStreak = parseInt(holdHighStreak);
+                        }
+                    }
+
+                    totalPlayersLeft = parseInt(totalPlayersLeft) - 1;
+                }
+                gameSetListInPlay();
+            } else {
+                // reset to 99
+                document.getElementById("actionChange").value = "99";
+            }
+        }
+
+        // this takes a number and adds st,th etc.. at the end. So 1 becomes 1st, 3 becomes 3rd etc....
+        function ordinal_suffix_of(i) {
+            var j = i % 10,
+                k = i % 100;
+            if (j == 1 && k != 11) {
+                return i + "st";
+            }
+            if (j == 2 && k != 12) {
+                return i + "nd";
+            }
+            if (j == 3 && k != 13) {
+                return i + "rd";
+            }
+            return i + "th";
+        }
+
+        function setCurrentPlayer() {
+            // Here is the last thing we run in the game as we have a winner!!!
+            if (parseInt(totalPlayersLeft) == 1) {
+                // if suddendeath was happening then ensure the blinking banner is off
+                if (parseInt(addH2HInterval) > 0) {
+                    clearInterval(addH2HInterval);
+                }
+                if (parseInt(addCurrentPlayerInterval) > 0) {
+                    clearInterval(addCurrentPlayerInterval);
+                }
+
+                // we have a winner
+                document.getElementById("home").style.display = "none";
+                document.getElementById("gameSetUp").style.display = "none";
+                document.getElementById("playersDiv").style.display = "none";
+                document.getElementById("game").style.display = "none";
+                document.getElementById("final").style.display = "none";
+                document.getElementById("winner").style.display = "block";
+
+                // add the last player as the winner!
+                var ulWinnerList = document.getElementById("winnerList");
+                var uiWinnerList = document.createElement("li");
+                var spanWinner = document.createElement("span");
+
+                // complete the 'finalTable' XML
+                finalTable = finalTable + "</final>";
+
+                /*
+                finalTable:
+                n: name
+                p: final position
+                c: class name
+                s: best streak
+                */
+                parser = new DOMParser();
+                xmlDoc = parser.parseFromString(finalTable, "text/xml");
+
+                var z = xmlDoc.getElementsByTagName("player");
+                for (var k = 0; k < z.length; k++) {
+                    var x = z[k].childNodes;
+
+                    var ulWinnerList = document.getElementById("winnerList");
+                    var uiWinnerList = document.createElement("li");
+                    var medal = document.createElement("span");
+                    var medalPerson = document.createElement("span");
+                    var best = document.createElement("span");
+                    var bestStreak = 0;
+
+                    playerName = x[0].firstChild.nodeValue;
+
+                    if (parseInt(highestStreak) > 0) {
+                        if (parseInt(highestStreak) == parseInt(x[3].firstChild.nodeValue)) {
+                            if (parseInt(currentPlayerBestStreak) <= parseInt(highestStreak)) {
+                                bestStreak = 1;
+                            }
+                        }
+                    }
+
+                    // 1st place
+                    if (parseInt(x[1].firstChild.nodeValue) == 1) {
+                        setChampion(currentPlayerName);
+                        medal.className = "medalFirst";
+                        medalPerson.className = "medalFirstName";
+                        medalPerson.innerText = " " + currentPlayerName;
+                        medalPerson.style.color = "yellow";
+
+                        if (parseInt(bestStreak) == 1) {
+                            // new
+                            var ths = document.createElement("span");
+                            ths.className = "streakName";
+                            ths.style.color = "white";
+                            ths.style.left = "21px";
+                            ths.style.top = "11px";
+                            ths.style.fontSize = "36px";
+                            ths.innerText = highestStreak.toString();
+                            best.appendChild(ths);
+                            best.style.position = "relative";
+                            best.style.height = "64px";
+                            best.style.width = "64px";
+                            best.style.top = "-27px";
+                            best.style.left = "10px";
+                            // new
+                            best.className = "potstreak11";
+                            howManyTopStreakPlayers = parseInt(howManyTopStreakPlayers) + 1;
+                            best.id = "bestId" + howManyTopStreakPlayers;
+                            best.value = 0;
+                            medalPerson.appendChild(best);
+                        }
+
+                        medal.appendChild(medalPerson);
+                        uiWinnerList.appendChild(medal);
+                    }
+                    // 2nd place
+                    else if (parseInt(x[1].firstChild.nodeValue) == 2) {
+                        medal.className = "medalSecond";
+                        medalPerson.className = "medalSecondFirstName";
+                        medalPerson.innerText = " " + playerName;
+
+                        if (parseInt(bestStreak) == 1) {
+                            // new
+                            var ths = document.createElement("span");
+                            ths.className = "streakName";
+                            ths.style.color = "white";
+                            ths.style.left = "21px";
+                            ths.style.top = "11px";
+                            ths.style.fontSize = "36px";
+                            ths.innerText = highestStreak.toString();
+                            best.appendChild(ths);
+                            best.style.position = "relative";
+                            best.style.height = "64px";
+                            best.style.width = "64px";
+                            best.style.top = "-27px";
+                            best.style.left = "10px";
+                            // new
+                            best.className = "potstreak11";
+                            howManyTopStreakPlayers = parseInt(howManyTopStreakPlayers) + 1;
+                            best.id = "bestId" + howManyTopStreakPlayers;
+                            best.value = 0;
+                            medalPerson.appendChild(best);
+                        }
+
+                        medal.appendChild(medalPerson);
+                        uiWinnerList.appendChild(medal);
+                        // 3rd place
+                    } else if (parseInt(x[1].firstChild.nodeValue) == 3) {
+                        medal.className = "medalThird";
+                        medalPerson.className = "medalThirdFirstName";
+                        medalPerson.innerText = " " + playerName;
+
+                        if (parseInt(bestStreak) == 1) {
+                            // new
+                            var ths = document.createElement("span");
+                            ths.className = "streakName";
+                            ths.style.color = "white";
+                            ths.style.left = "21px";
+                            ths.style.top = "11px";
+                            ths.style.fontSize = "36px";
+                            ths.innerText = highestStreak.toString();
+                            best.appendChild(ths);
+                            best.style.position = "relative";
+                            best.style.height = "64px";
+                            best.style.width = "64px";
+                            best.style.top = "-27px";
+                            best.style.left = "10px";
+                            // new
+                            best.className = "potstreak11";
+                            howManyTopStreakPlayers = parseInt(howManyTopStreakPlayers) + 1;
+                            best.id = "bestId" + howManyTopStreakPlayers;
+                            best.value = 0;
+                            medalPerson.appendChild(best);
+                        }
+
+                        medal.appendChild(medalPerson);
+                        uiWinnerList.appendChild(medal);
+                        // 4th-n place
+                    } else {
+                        medalPerson.innerText = " " + ordinal_suffix_of(parseInt(x[1].firstChild.nodeValue)) + " " + playerName;
+
+                        if (parseInt(bestStreak) == 1) {
+                            // new
+                            var ths = document.createElement("span");
+                            ths.className = "streakName";
+                            ths.style.color = "white";
+                            ths.style.left = "15px";
+                            ths.style.top = "3px";
+                            ths.style.fontSize = "27px";
+                            ths.innerText = highestStreak.toString();
+                            best.appendChild(ths);
+                            best.style.position = "relative";
+                            best.style.height = "48px";
+                            best.style.width = "48px";
+                            best.style.top = "-10px";
+                            best.style.left = "10px";
+                            // new
+                            best.className = "potstreak11";
+                            howManyTopStreakPlayers = parseInt(howManyTopStreakPlayers) + 1;
+                            best.id = "bestId" + howManyTopStreakPlayers;
+                            best.value = 0;
+                            medalPerson.appendChild(best);
+                        }
+                        uiWinnerList.appendChild(medalPerson);
+                    }
+
+                    // add player to list
+                    ulWinnerList.insertBefore(uiWinnerList, ulWinnerList.firstChild);
+                }
+
+                addNewPlayerInterval = setInterval(function () {
+                    if (medalPerson.style.color == 'yellow') {
+                        medalPerson.style.color = 'green';
+                    } else if (medalPerson.style.color == 'green') {
+                        medalPerson.style.color = 'pink';
+                    } else if (medalPerson.style.color == 'pink') {
+                        medalPerson.style.color = 'white';
+                    } else if (medalPerson.style.color == 'white') {
+                        medalPerson.style.color = 'black';
+                    } else {
+                        medalPerson.style.color = 'yellow';
+                    }
+                }, 1000);
+
+                /*
+                highestStreakInterval = setInterval(function () {
+                    var yy = parseInt(howManyTopStreakPlayers);
+                    while (parseInt(yy) > 0) {
+                        var ttt = document.getElementById("bestId" + yy);
+                        if (parseInt(ttt.value) == 0) {
+                            ttt.value = 1;
+                            ttt.className = "potstreakOff";
+                            ttt.innerText = " [" + highestStreak + "]";
+                        } else {
+                            ttt.value = 0;
+                            ttt.innerText = "";
+                            ttt.className = "potstreak11";
+                        }
+                        yy = parseInt(yy) - 1;
+                    }
+                }, 1000);
+                */
+
+                document.getElementById("logo").style.display = "none";
+                // finish!
+                return;
+            }
+            if (parseInt(totalPlayersLeft) == 2) {
+                if (parseInt(potToWin) == 1) {
+                    // now we can set the NEXT player details
+                    parser = new DOMParser();
+                    xmlDoc = parser.parseFromString(theGame, "text/xml");
+                    var z = xmlDoc.getElementsByTagName("player");
+                    for (var k = 0; k < z.length; k++) {
+                        var x = z[k].childNodes;
+                        // if this player has more than 1 lifde AND it's not the current player then its the OTHER player :)
+                        if (parseInt(x[1].firstChild.nodeValue) > 0 && parseInt(x[2].firstChild.nodeValue) != parseInt(currentPlayerId) && parseInt(headToHead) == 0) {
+                            headToHeadPlayer1Name = currentPlayerName;
+                            headToHeadPlayer1Life = currentPlayerLife;
+                            headToHeadPlayer1Id = currentPlayerId;
+                            headToHeadPlayer1PotsInRow = currentPlayerPotsInRow;
+                            headToHeadPlayer1MissInRow = currentPlayerMissInRow;
+                            headToHeadPlayer1History = currentPlayerHistory;
+
+                            headToHeadPlayer2Name = x[0].firstChild.nodeValue;
+                            headToHeadPlayer2Life = parseInt(x[1].firstChild.nodeValue);
+                            headToHeadPlayer2Id = parseInt(x[2].firstChild.nodeValue);
+                            headToHeadPlayer2PotsInRow = parseInt(x[3].firstChild.nodeValue);
+                            headToHeadPlayer2MissInRow = parseInt(x[4].firstChild.nodeValue);
+                            headToHeadPlayer2History = x[5].firstChild.nodeValue;
+
+                        }
+                    }
+                    if (parseInt(headToHeadPlayer1Life) == 1 && parseInt(headToHeadPlayer2Life) == 1) {
+                        // this is the indicator to say its a 1vs1
+                        headToHead = 1;
+                    }
+                    parser = null;
+                }
+            }
+
+            var cp = document.getElementById("InAction");
+            cp.innerHTML = "";
+            var pot = document.createElement("button");
+            var miss = document.createElement("button");
+            var nameSpan = document.createElement("div");
+            var heartsSpan = document.createElement("div");
+            var confirmAction = document.createElement("button");
+            var confirmActionDiv = document.createElement("div");
+            var confirmActionGrowDiv = document.createElement("div");
+            var resultDiv = document.createElement("div");
+
+            resultDiv.style.height = "228px";
+            resultDiv.id = "resultDiv";
+            resultDiv.style.zIndex = "-1";
+
+            confirmActionDiv.height = "228px";
+            confirmActionDiv.id = "actionChangeDiv";
+            confirmActionDiv.style.display = "none";
+            confirmActionDiv.style.position = "relative";
+            confirmActionDiv.style.top = "-228px";
+            confirmActionDiv.style.zIndex = -1;
+
+            confirmActionGrowDiv.height = "228px";
+            confirmActionGrowDiv.id = "actionChangeGrowDiv";
+            confirmActionGrowDiv.style.display = "none";
+            confirmActionGrowDiv.style.position = "absolute";
+            confirmActionGrowDiv.style.zIndex = -1;
+            confirmActionGrowDiv.style.backgroundColor = "red";
+            confirmActionGrowDiv.style.width = "0px";
+
+            confirmAction.style.width = "100%";
+            //confirmAction.style.left = "25%";
+            confirmAction.style.display = "none";
+            confirmAction.value = "99"; // when this is 99 it means we DO want to cancel the event happening
+            confirmAction.id = "actionChange";
+            confirmAction.className = "potMissSize";
+            confirmAction.style.position = "absolute";
+            confirmAction.style.zIndex = 1;
+            //confirmAction.innerText = "Confirming . . . ";
+            confirmAction.addEventListener("click", playerActionChange(currentPlayerId));
+            //confirmAction.addEventListener("touchstart", playerActionChange(currentPlayerId));
+
+            pot.innerText = "POT";
+            pot.className = "pot";
+            pot.id = "actionPot";
+            pot.addEventListener("click", playerPot(currentPlayerId));
+            //pot.addEventListener("touchstart", playerPot(currentPlayerId));
+
+            miss.className = "miss";
+            miss.id = "actionMiss";
+            miss.innerText = "MISS";
+            miss.addEventListener("click", playerMiss(currentPlayerId));
+            //miss.addEventListener("touchstart", playerMiss(currentPlayerId));
+
+            if (cChamp == currentPlayerName) {
+                nameSpan.className = "playa";
+                nameSpan.innerHTML = "<span class='playaChamp'>&nbsp;</span>" + currentPlayerName;
+                nameSpan.style.display = "block";
+            } else {
+                nameSpan.className = "playa";
+                nameSpan.innerText = currentPlayerName;
+                nameSpan.style.display = "block";
+            }
+
+            livesCount = lives;
+            // set hearts
+            while (parseInt(livesCount) > 0) {
+                // i.e. they still have lives
+                if (parseInt(currentPlayerLife) >= parseInt(livesCount)) {
+                    // create heart spans . .
+                    var heartSpan = document.createElement("span");
+                    heartSpan.className = "heart";
+                    // add hearts to list . . .
+                    heartsSpan.appendChild(heartSpan);
+                } else {
+                    // create heart spans . .
+                    var heartSpan = document.createElement("span");
+                    heartSpan.className = "heartLoss";
+                    // add hearts to list . . .
+                    heartsSpan.appendChild(heartSpan);
+                }
+                livesCount = parseInt(livesCount) - 1;
+            }
+            heartsSpan.style.display = "block";//new line
+
+            cp.appendChild(nameSpan).appendChild(heartsSpan);
+
+            if (parseInt(headToHead) == 1) {
+                var h2h = document.createElement("span");
+                var h2hVersus = document.createElement("span");
+                var h2hPlayer1 = document.createElement("span");
+                var h2hPlayer2 = document.createElement("span");
+                var h2hAlert = document.createElement("span");
+                h2hVersus.className = "headToHeadTitleVs";
+                h2hVersus.innerText = " vs. ";
+                h2hPlayer1.className = "headToHeadTitleLeft";
+                h2hPlayer1.innerText = headToHeadPlayer1Name;
+                h2hPlayer2.className = "headToHeadTitleRight";
+                h2hPlayer2.innerText = headToHeadPlayer2Name;
+                if (headToHeadBannerInfo == "") {
+                    h2hAlert.innerText = "Sudden Death";
+                } else {
+                    h2hAlert.innerText = headToHeadBannerInfo;//"Sudden Death : " + headToHeadBannerInfo;
+                }
+                h2hAlert.style.display = "none";
+                h2hAlert.id = "h2hAlert";
+                h2hAlert.className = "headToHeadAlert";
+                h2h.id = "HeadToHeadBanner";
+                h2h.value = 0;
+                cp.appendChild(h2hAlert);
+                h2h.appendChild(h2hPlayer1);
+                h2h.appendChild(h2hVersus);
+                h2h.appendChild(h2hPlayer2);
+
+                if (parseInt(addH2HInterval) > 0) {
+                    clearInterval(addH2HInterval);
+                }
+
+                addH2HInterval = setInterval(function () {
+                    if (h2h.value == "0") {
+                        h2h.value = 1;
+                        document.getElementById("h2hAlert").style.display = "block";
+                        document.getElementById("HeadToHeadBanner").style.display = "none";
+                    } else {
+                        h2h.value = 0;
+                        document.getElementById("h2hAlert").style.display = "none";
+                        document.getElementById("HeadToHeadBanner").style.display = "block";
+                    }
+                }, 2000);
+
+                cp.appendChild(h2h);
+            }
+
+            resultDiv.appendChild(pot);
+            resultDiv.appendChild(miss);
+
+            cp.appendChild(resultDiv);
+            confirmActionDiv.appendChild(confirmActionGrowDiv);
+            confirmActionDiv.appendChild(confirmAction);
+            cp.appendChild(confirmActionDiv);
+        }
+
+        function Left(str, n) {
+            if (n <= 0)
+                return "";
+            else if (n > String(str).length)
+                return str;
+            else
+                return String(str).substring(0, n);
+        }
+
+        function Right(str, n) {
+            if (n <= 0)
+                return "";
+            else if (n > String(str).length)
+                return str;
+            else {
+                var iLen = String(str).length;
+                return String(str).substring(iLen, iLen - n);
+            }
+        }
+
+        function gameSetListInPlay() {
+            nextPlayerId = 0; // reset. This cannot end the function as 0 . . .  PlayerIds start at 1 . . .
+            // this is THE function that determines who is next AND is the game over
+            var ulGame = document.getElementById("playerGameListFinal");
+            ulGame.innerHTML = "";
+            parser = new DOMParser();
+            xmlDoc = parser.parseFromString(theGame, "text/xml");
+
+            var z = xmlDoc.getElementsByTagName("player");
+            for (var k = 0; k < z.length; k++) {
+                var x = z[k].childNodes;
+                playerName = x[0].firstChild.nodeValue;
+                playerLife = parseInt(x[1].firstChild.nodeValue);
+                playerId = parseInt(x[2].firstChild.nodeValue);
+                playerPotsInRow = parseInt(x[3].firstChild.nodeValue);
+                playerMissInRow = parseInt(x[4].firstChild.nodeValue);
+                playerHistory = x[5].firstChild.nodeValue;
+
+                if (parseInt(nextPlayerId) == 0) {
+                    if (parseInt(playerId) > parseInt(currentPlayerId)) {
+                        if (parseInt(playerLife) > 0) {
+                            nextPlayerId = playerId;
+                        }
+                    }
+                }
+
+                livesCount = lives;
+                var liGame = document.createElement("li");
+
+                while (parseInt(livesCount) > 0) {
+                    // i.e. they still have lives
+                    if (parseInt(playerLife) >= parseInt(livesCount)) {
+                        // create heart spans . .
+                        var heartSpan = document.createElement("span");
+                        heartSpan.className = "heart";
+                        // add hearts to list . . .
+                        liGame.appendChild(heartSpan);
+                    } else {
+                        // create heart spans . .
+                        var heartSpan = document.createElement("span");
+                        heartSpan.className = "heartLoss";
+                        // add hearts to list . . .
+                        liGame.appendChild(heartSpan);
+                    }
+                    livesCount = parseInt(livesCount) - 1;
+                }
+                if (playerName == cChamp) {
+                    var heartSpan = document.createElement("span");
+                    heartSpan.className = "heartCrown";
+                    liGame.appendChild(document.createTextNode(" "));
+                    liGame.appendChild(heartSpan);
+                    /*var heartSpan2 = document.createElement("span");
+                    heartSpan2.className = "heartCrown";*/
+                    liGame.appendChild(document.createTextNode(playerName));
+                    /*liGame.appendChild(heartSpan2);*/
+                } else {
+
+                    liGame.appendChild(document.createTextNode(" " + playerName));
+                }
+
+                // ######################################################################
+                // ######################################################################
+                // ######################################################################
+                // Player streak section START
+                // ######################################################################
+                // ######################################################################
+                // ######################################################################
+                if (parseInt(playerPotsInRow) > 0) {
+                    var liPotStreakSpace = document.createElement("span");
+                    liPotStreakSpace.innerText = " ";
+                    liGame.appendChild(liPotStreakSpace);
+                    PotStreakCount = 0;
+                    // attempting here to add pot streak..
+                    while (playerHistory.length > 1) {
+                        if (Right(playerHistory, 1) == "0") {
+                            break;
+                        }
+                        else {
+                            PotStreakCount = parseInt(PotStreakCount) + 1;
+                            var liPotStreak = document.createElement("span");
+                            if (parseInt(PotStreakCount) > 9) {
+                                liPotStreak.className = "potstreak11";
+                                var ths = document.createElement("span");
+                                ths.className = "streakName";
+                                ths.style.color = "white";
+                                ths.style.left = "5px";
+                                ths.innerText = PotStreakCount.toString();
+                                liPotStreak.value = "0";
+                                liPotStreak.appendChild(ths);
+                            } else {
+                                var ths = document.createElement("span");
+                                ths.className = "streakName";
+                                if (parseInt(PotStreakCount) > 5) {
+                                    ths.style.color = "white";
+                                }
+                                if (parseInt(PotStreakCount) > 9) {
+                                    ths.style.left = "5px";
+                                }
+                                ths.innerText = PotStreakCount.toString();
+                                liPotStreak.appendChild(ths);
+
+                                liPotStreak.className = "potstreak" + PotStreakCount.toString();
+                            }
+
+                            liPotStreak.id = playerId + "_" + playerHistory.length;
+
+                            liGame.appendChild(liPotStreak);
+
+                            /*
+                            if (parseInt(PotStreakCount) > 9) {
+                                var fazza = setInterval(function () {
+                                    var fffX = liPotStreak;
+                                    if (fffX.value == "0") {
+                                        fffX.value = "1";
+                                        fffX.style.backgroundImage = "url(ball.png)";
+                                    } else {
+                                        fffX.value = "0";
+                                        fffX.style.backgroundImage = "url(fire.gif)";
+                                    }
+                                }, 1000);
+                            }*/
+                        }
+
+                        playerHistory = Left(playerHistory, (playerHistory.length) - 1);//playerHistory.substring(0, (playerHistory.length) - 1);
+
+                        if (playerHistory == "Z") {
+                            break;
+                        }
+                    }
+                }
+                // ######################################################################
+                // ######################################################################
+                // ######################################################################
+                // Player streak section END
+                // ######################################################################
+                // ######################################################################
+                // ######################################################################
+
+                // add them to the game list
+                if (parseInt(playerLife) == 0) {
+                    liGame.style.fontSize = "32px";
+                    liGame.style.opacity = "0.5";
+                    // august 2019 we now HIDE the user from the list of active players and put them into the LOSER box
+                    liGame.style.display = "none";
+                    try {
+                        // loserplayers
+                        var indexLoser = loserplayers.indexOf(playerName);
+                        if (indexLoser == -1) {
+                            loserplayers.push(playerName);
+                            addLoser(playerName);
+                        }
+                    } catch (err) {
+                        alert(err);
+                    }
+                }
+                liGame.id = "playerlist" + playerId;
+                ulGame.appendChild(liGame);
+            }
+
+            if (parseInt(nextPlayerId) == 0) {
+                for (var k = 0; k < z.length; k++) {
+                    var x = z[k].childNodes;
+                    if (parseInt(currentPlayerId) != parseInt(x[2].firstChild.nodeValue)) {
+                        if (parseInt(x[1].firstChild.nodeValue) > 0) {
+                            nextPlayerId = parseInt(x[2].firstChild.nodeValue);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // set the 'Current Player' variables here
+            for (var k = 0; k < z.length; k++) {
+                var x = z[k].childNodes;
+                if (parseInt(nextPlayerId) == parseInt(x[2].firstChild.nodeValue)) {
+                    currentPlayerName = x[0].firstChild.nodeValue;
+                    currentPlayerLife = parseInt(x[1].firstChild.nodeValue);
+                    currentPlayerId = parseInt(x[2].firstChild.nodeValue);
+                    currentPlayerPotsInRow = parseInt(x[3].firstChild.nodeValue);
+                    currentPlayerMissInRow = parseInt(x[4].firstChild.nodeValue);
+                    currentPlayerHistory = x[5].firstChild.nodeValue;
+
+                    if (parseInt(addCurrentPlayerInterval) > 0) {
+                        clearInterval(addCurrentPlayerInterval);
+                    }
+                    addCurrentPlayerInterval = setInterval(function () {
+                        var fff = document.getElementById("playerlist" + currentPlayerId);
+                        if (fff.style.color == 'yellow') {
+                            fff.style.color = 'white';
+                        } else {
+                            fff.style.color = 'yellow';
+                        }
+                    }, 1000);
+
+                    if (parseInt(totalPlayersLeft) == 1) {
+                        var holdHighStreak = 0;
+                        currentPlayerBestStreak = 0;
+                        // attempting here to add pot streak..
+                        while (currentPlayerHistory.length > 1) {
+                            if (Right(currentPlayerHistory, 1) == "1") {
+                                currentPlayerBestStreak = currentPlayerBestStreak + 1;
+                            }
+                            else {
+                                currentPlayerBestStreak = 0;
+                            }
+
+                            if (parseInt(currentPlayerBestStreak) > parseInt(holdHighStreak)) {
+                                holdHighStreak = currentPlayerBestStreak;
+                            }
+
+                            currentPlayerHistory = Left(currentPlayerHistory, (currentPlayerHistory.length) - 1);
+
+                            if (currentPlayerHistory == "Z") {
+                                break;
+                            }
+                        }
+                        finalTable = finalTable + "<player><n>" + currentPlayerName + "</n><p>" + parseInt(totalPlayersLeft).toString() + "</p><c>what</c><s>" + parseInt(holdHighStreak).toString() + "</s></player>";
+
+                        if (parseInt(holdHighStreak) > 0) {
+                            if (parseInt(holdHighStreak) > parseInt(highestStreak)) {
+                                highestStreak = parseInt(holdHighStreak);
+                            }
+                        }
+                    }
+
+                    break;
+                }
+            }
+
+            parser = null;
+            setCurrentPlayer();
+        }
+
+        function gameStartForReal() {
+            currentPlayerId = 1; // holds a sequential Id for the player
+            //currentPlayer = "";
+            theGame = "<players>";
+            document.getElementById("home").style.display = "none";
+            document.getElementById("gameSetUp").style.display = "none";
+            document.getElementById("playersDiv").style.display = "none";
+            document.getElementById("game").style.display = "none";
+            document.getElementById("final").style.display = "block";//game
+            document.getElementById("losers").style.display = "block";// holds a list of losers
+
+            var ulGame = document.getElementById("playerGameListFinal");
+
+            var arrayLengthGameReal = gamePlayers.length;
+            for (var i = 0; i < arrayLengthGameReal; i++) {
+                // 'currentPlayerName' is always the FIRST player out the hat . . .
+                if (currentPlayerName == "") {
+                    //currentPlayer = "<player><name>" + gamePlayers[i] + "</name><life>" + lives.toString() + "</life></player>";
+                    currentPlayerName = gamePlayers[i];
+                    currentPlayerLife = parseInt(lives);
+                }
+                // 'theGame' is a complete XML string of players that will track lives etc...
+                /*
+                    name : (varchar) players name
+                    life : (int) now many lives are left
+                    id : (int) unique number (in the game only) that represents the player
+                    p : (int) number of pots on a row. This will increment until they miss!
+                    m : (int) number of MISSES on a row. This will increment until they pot!
+                    s : (binary) a series of ONEs and ZEROs i.e. 00100100100100111 with 1 meaning a POT and a 0 meaning a MISS so we fully track them through the entire game.
+                    b : highest pot streak
+                */
+                theGame += "<player><name>" + gamePlayers[i] + "</name><life>" + lives.toString() + "</life><id>" + currentPlayerId.toString() + "</id><p>0</p><m>0</m><s>Z</s></player>";
+
+                // add player to list . . .
+                var liGame = document.createElement("li");
+                liGame.id = "playerlist" + currentPlayerId;
+                currentPlayerId = parseInt(currentPlayerId) + 1;
+
+                livesCount = lives;
+                while (parseInt(livesCount) > 0) {
+                    // create heart spans . .
+                    var heartSpan = document.createElement("span");
+                    heartSpan.className = "heart";
+                    // add hearts to list . . .
+                    liGame.appendChild(heartSpan);
+                    livesCount = parseInt(livesCount) - 1;
+                }
+
+                if (gamePlayers[i] == cChamp) {
+                    var heartSpan = document.createElement("span");
+                    heartSpan.className = "heartCrown";
+                    liGame.appendChild(document.createTextNode(" "));
+                    liGame.appendChild(heartSpan);
+                    /*var heartSpan2 = document.createElement("span");
+                    heartSpan2.className = "heartCrown";*/
+                    liGame.appendChild(document.createTextNode(gamePlayers[i]));
+                    /*liGame.appendChild(heartSpan2);*/
+                } else {
+                    liGame.appendChild(document.createTextNode(" " + gamePlayers[i]));
+                }
+
+                // now add the list item (with hearts) to the list
+                ulGame.appendChild(liGame);
+
+                totalPlayers = totalPlayers + 1;
+            }
+            totalPlayersLeft = totalPlayers;
+            theGame += "</players>";
+
+            //rawXml.innerHTML = theGame;
+            // defaults. . .
+            currentPlayerId = 1;
+            currentPlayerPotsInRow = 0;
+            currentPlayerMissInRow = 0;
+            currentPlayerHistory = "Z";
+
+            // this sets the first users name to flash
+            if (parseInt(addCurrentPlayerInterval) > 0) {
+                clearInterval(addCurrentPlayerInterval);
+            }
+            addCurrentPlayerInterval = setInterval(function () {
+                var fff = document.getElementById("playerlist" + currentPlayerId);
+                if (fff.style.color == 'yellow') {
+                    fff.style.color = 'white';
+                } else {
+                    fff.style.color = 'yellow';
+                }
+            }, 1000);
+
+            setCurrentPlayer();
+        }
+
+        function shufflePlayers() {
+            array = gamePlayers;
+            var currentIndex = array.length, temporaryValue, randomIndex;
+
+            // While there remain elements to shuffle...
+            while (0 !== currentIndex) {
+
+                // Pick a remaining element...
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex -= 1;
+
+                // And swap it with the current element.
+                temporaryValue = array[currentIndex];
+                array[currentIndex] = array[randomIndex];
+                array[randomIndex] = temporaryValue;
+            }
+            gamePlayers = []; // clear array
+            if (parseInt(isChampPlaying) == 1) {
+                var indexX = array.indexOf(cChamp);
+                if (indexX > -1) {
+                    array.splice(indexX, 1);
+                }
+                array.unshift(cChamp);
+            }
+            gamePlayers = array;
+            gameStart();
+        }
+
+        function backToGameSetup() {
+            //gamePlayers = [];// clear array
+            document.getElementById("home").style.display = "none";
+            document.getElementById("gameSetUp").style.display = "block";
+            document.getElementById("playersDiv").style.display = "none";
+            document.getElementById("game").style.display = "none";
+        }
+
+        function gameStartInitial() {
+            // check that at least 2 players are selected . . 
+            if (parseInt(gamePlayers.length) > 1) {
+                shufflePlayers();
+            } else {
+                alert("Select 2 or more players");
+                return;
+            }
+        }
+
+        function gameStart() {
+            if (parseInt(addNewPlayerInterval) > 0) {
+                clearInterval(addNewPlayerInterval);
+                addNewPlayerInterval = 0;
+            }
+            // this lists the players and allows them to be 'shuffled' before the game starts
+            document.getElementById("home").style.display = "none";
+            document.getElementById("gameSetUp").style.display = "none";
+            document.getElementById("playersDiv").style.display = "none";
+            document.getElementById("game").style.display = "block";
+
+            var ulGame = document.getElementById("playerGameList");
+            document.getElementById("playerGameList").innerHTML = "";
+            var arrayLengthGame = gamePlayers.length;
+            for (var i = 0; i < arrayLengthGame; i++) {
+                var liGame = document.createElement("li");
+                if (i == 0) {
+                    var liSpan = document.createElement("span");
+                    liSpan.className = "breakOff";
+                    liGame.appendChild(liSpan);
+                    if (parseInt(isChampPlaying) == 1) {
+                        var liSpanC = document.createElement("span");
+                        liSpanC.className = "breakOffChamp";
+                        liGame.appendChild(document.createTextNode(" " + gamePlayers[i] + " "));
+                        liGame.appendChild(liSpanC);
+                    } else {
+                        liGame.appendChild(document.createTextNode(" " + gamePlayers[i]));
+                    }
+                } else {
+                    liGame.appendChild(document.createTextNode(parseInt(i + 1) + " " + gamePlayers[i]));
+                }
+                ulGame.appendChild(liGame);
+            }
+        }
+
+        function gameSetUpStop() {
+            document.getElementById("home").style.display = "block";
+            document.getElementById("gameSetUp").style.display = "none";
+            document.getElementById("game").style.display = "none";
+            document.getElementById("playersDiv").style.display = "none";
+        }
+
+        var checkFunc = function (someVar, x) {
+            return function curried_func(e) {
+                // do something here
+                var lfckv = x.checked;
+                if (lfckv == true) {
+                    //alert("add " + someVar);
+                    gamePlayers.push(someVar);
+                }
+                else {
+                    var index = gamePlayers.indexOf(someVar);
+                    if (index !== -1) { gamePlayers.splice(index, 1); }
+                }
+            };
+        };
+
+        var butFuncAddPlayer = function (blink2) {
+            return function curried_func(e) {
+
+                if (parseInt(blink2) > 0) {
+                    clearInterval(blink2);
+                    addNewPlayerInterval = 0;
+                }
+                document.getElementById("home").style.display = "none";
+                document.getElementById("gameSetUp").style.display = "none";
+                document.getElementById("playersDiv").style.display = "block";
+                document.getElementById("game").style.display = "none";
+                document.getElementById("final").style.display = "none";
+                document.getElementById("winner").style.display = "none";
+            };
+        };
+
+        var butFunc = function (someVar, x, pl) {
+            return function curried_func(e) {
+
+                // as this is a button passing a value it means when 1 is passed in it means the player is NOT currently selected . . .
+                var lfckv = x.value;
+                if (lfckv == 1) {
+                    gamePlayers.push(someVar);
+                    x.value = 0;
+                    if (pl === cChamp) {
+                        isChampPlaying = 1;
+                        x.className = "playerSelectedChampion";
+                    } else {
+                        x.className = "playerSelected";
+                    }
+                }
+                else {
+                    var index = gamePlayers.indexOf(someVar);
+                    if (index !== -1) { gamePlayers.splice(index, 1); }
+                    x.value = 1;
+                    if (pl === cChamp) {
+                        isChampPlaying = 0;
+                        x.className = "playerSelectChampion";
+                    } else {
+                        x.className = "playerSelect";
+                    }
+                }
+            };
+        };
+
+        var butFuncMD = function (someVar, x) {
+            return function curried_func(e) {
+
+                // as this is a button passing a value it means when 1 is passed in it means the player is NOT currently selected . . .
+                if (parseInt(deleteTimer) > 0) {
+                    clearTimeout(deleteTimer);
+                }
+                deleteTimer = setTimeout(function () {
+                    var index = gamePlayers.indexOf(x.innerText);
+                    if (index !== -1) { gamePlayers.splice(index, 1); }
+                    x.remove();
+                }, 2000);
+            };
+        };
+
+        var butFuncMDout = function (someVar, x) {
+            return function curried_func(e) {
+
+                // as this is a button passing a value it means when 1 is passed in it means the player is NOT currently selected . . .
+                if (parseInt(deleteTimer) > 0) {
+                    clearTimeout(deleteTimer);
+                }
+            };
+        };
+
+        function gameSetUp(reestablishPickedPlayers) {
+            document.getElementById("playersDiv").style.display = "none";
+            document.getElementById("home").style.display = "none";
+            document.getElementById("gameSetUp").style.display = "block";
+            document.getElementById("playerListSelected").innerHTML = "";
+
+            var ul = document.getElementById("playerListSelected");
+            var arrayLength = players.length;
+            // this is the Add Player option
+            var buttAdd = document.createElement("button");
+            buttAdd.id = "addnewplayer";
+
+            // blink
+            addNewPlayerInterval = setInterval(function () {
+                if (buttAdd.style.color == 'black') {
+                    buttAdd.style.color = 'yellow';
+                } else {
+                    buttAdd.style.color = 'black';
+                }
+            }, 1000);
+
+            buttAdd.type = "button";
+            buttAdd.innerText = "ADD+";
+            buttAdd.className = "addPlayerSelect";
+            buttAdd.value = 1;
+            buttAdd.addEventListener("click", butFuncAddPlayer(addNewPlayerInterval));
+            //buttAdd.addEventListener("touchstart", butFuncAddPlayer(addNewPlayerInterval));
+            ul.appendChild(buttAdd);
+
+            for (var i = 0; i < arrayLength; i++) {
+                var pl = players[i];
+                var butt = document.createElement("button");
+
+                butt.type = "button";
+                butt.innerText = pl;
+                if (pl === cChamp) {
+                    butt.className = "playerSelectChampion";
+                } else {
+                    butt.className = "playerSelect";
+                }
+                butt.id = "playerPick" + pl;
+                butt.value = 1;
+                butt.addEventListener("click", butFunc(pl, butt, pl));
+                //butt.addEventListener("touchstart", butFunc(pl, butt, pl));
+                // the 'mousedown' deletes players . . .
+
+                // mousedown
+                butt.addEventListener("touchstart", butFuncMD(pl, butt, pl));
+                // the 'mouseup' deletes the timer that is started for deleting players
+
+                //butt.addEventListener("mouseup", butFuncMDout(pl, butt, pl));
+                butt.addEventListener("touchend", butFuncMDout(pl, butt, pl));
+
+                if (reestablishPickedPlayers == "1") {
+                    var index1 = gamePlayers.indexOf(pl);
+                    if (index1 !== -1) {
+
+                        try {
+                            // 0 is SELECTED, yeah thats backwards logic
+                            butt.value = 0;
+                        }
+                        catch (err) {
+
+                        }
+
+                        // player IS picked so add them back in visually
+                        if (pl === cChamp) {
+                            isChampPlaying = 1;
+                            butt.className = "playerSelectedChampion";
+                        } else {
+                            butt.className = "playerSelected";
+                        }
+                    }
+                }
+
+                ul.appendChild(butt);
+            }
+        }
+
+        function startAddPlayer() {
+            document.getElementById("playersDiv").style.display = "block";
+            document.getElementById("pname").focus();
+        }
+
+        function addPlayer() {
+            if (document.getElementById("pname").value.length > 0) {
+                var newName = document.getElementById("pname").value;
+                var index = players.indexOf(newName);
+                if (index !== -1) {
+                    // . . . AND add the new player as a selected player in the next game . . . .
+                    gamePlayers.push(newName);
+                } else {
+                    // add new player as an available player . . .
+                    players.push(newName);
+                    // . . . AND add the new player as a selected player in the next game . . . .
+                    gamePlayers.push(newName);
+                }
+                try {
+                    // 0 is SELECTED, yeah thats backwards logic
+                    document.getElementById("playerPick" + newName).value = "0";
+                }
+                catch (err) {
+
+                }
+                document.getElementById("pname").value = "";
+                document.getElementById("pnameSpan").innerText = ". . . . . .";
+                players.sort();
+            }
+            // go back to player select list rather than have 2 options of ADD & ADD (do you want another)
+            gameSetUp("1");
+            return;
+        }
+
+        function backToStart() {
+            if (parseInt(addNewPlayerInterval) > 0) {
+                clearInterval(addNewPlayerInterval);
+                addNewPlayerInterval = 0;
+            }
+            if (parseInt(highestStreakInterval) > 0) {
+                clearInterval(highestStreakInterval);
+                highestStreakInterval = 0;
+            }
+
+            resetEverything(function () {
+                startThis(function () {
+                    startThis2();
+                });
+            });
+
+
+            //resetEverything();
+            //startThis();
+            //startThis2();
+        }
+
+        function helpOpen() {
+            document.getElementById("helpThis").style.display = "block";
+        }
+        function helpClose() {
+            document.getElementById("helpThis").style.display = "none";
+        }
+    </script>
 </head>
-<body>
-	<div id="home">
-		<button onclick="startAddPlayer()">ADD PLAYERS</button>
-		<button onclick="gameSetUp()">SETUP GAME</button>
-		<button onclick="xmlLoop()">XML Loop</button>
-		<button id="bob" class="miss" onclick="tester();">Hello</button>
-	</div>
-	<div id="gameSetUp" style="display:none">
-		<button onclick="gameStart()">SET PLAYER ORDER</button>
-		<button onclick="gameSetUpStop()">CANCEL</button>
-		<h1>Who's Playing . . . . </h1>
-		<div id="playerListSelected" class="playerSelect"></div>
-	</div>
-	<div id="playersDiv" style="display:none">
-		<div class="letterblocks">
-			<input type="text" id="pname" style="display:none;visibility:hidden" />
-			<button onclick="addPlayer()">ADD</button>
-			<button onclick="nameAdd(' ');">SPACE</button>
-			<button onclick="rubPlayer()">RUB</button>
-			<span id="pnameSpan" style="position:absolute;top:80px;left:0px;z-index:-1">. . . . . .</span>
-		</div>
-			<div class="letterblocks">
-				<button type="button" onclick="nameAdd('A');">A</button>
-				<button type="button" onclick="nameAdd('B');">B</button>
-				<button type="button" onclick="nameAdd('C');">C</button>
-				<button type="button" onclick="nameAdd('D');">D</button>
-				<button type="button" onclick="nameAdd('E');">E</button>
-				<button type="button" onclick="nameAdd('F');">F</button>
-			</div>
-			<div class="letterblocks">
-				<button type="button" onclick="nameAdd('G');">G</button>
-				<button type="button" onclick="nameAdd('H');">H</button>
-				<button type="button" onclick="nameAdd('I');">I</button>
-				<button type="button" onclick="nameAdd('J');">J</button>
-				<button type="button" onclick="nameAdd('K');">K</button>
-				<button type="button" onclick="nameAdd('L');">L</button>
-			</div>
-			<div class="letterblocks">
-				<button type="button" onclick="nameAdd('M');">M</button>
-				<button type="button" onclick="nameAdd('N');">N</button>
-				<button type="button" onclick="nameAdd('O');">O</button>
-				<button type="button" onclick="nameAdd('P');">P</button>
-				<button type="button" onclick="nameAdd('Q');">Q</button>
-				<button type="button" onclick="nameAdd('R');">R</button>
-			</div>
-			<div class="letterblocks">
-				<button type="button" onclick="nameAdd('S');">S</button>
-				<button type="button" onclick="nameAdd('T');">T</button>
-				<button type="button" onclick="nameAdd('U');">U</button>
-				<button type="button" onclick="nameAdd('V');">V</button>
-				<button type="button" onclick="nameAdd('W');">W</button>
-				<button type="button" onclick="nameAdd('X');">X</button>
-			</div>
-			<div class="letterblocks">
-				<button type="button" onclick="nameAdd('Y');">Y</button>
-				<button type="button" onclick="nameAdd('Z');">Z</button>
-				<button type="button" onclick="nameAdd('0');">0</button>
-				<button type="button" onclick="nameAdd('1');">1</button>
-				<button type="button" onclick="nameAdd('2');">2</button>
-				<button type="button" onclick="nameAdd('3');">3</button>
-			</div>
-			<div class="letterblocks">
-				<button type="button" onclick="nameAdd('4');">4</button>
-				<button type="button" onclick="nameAdd('5');">5</button>
-				<button type="button" onclick="nameAdd('6');">6</button>
-				<button type="button" onclick="nameAdd('7');">7</button>
-				<button type="button" onclick="nameAdd('8');">8</button>
-				<button type="button" onclick="nameAdd('9');">9</button>
-			</div>
-			<ul id="playerList"></ul>
-		</div>
-		<div id="game" style="display:none">
-			<button onclick="shufflePlayers()">SHUFFLE PLAYER ORDER</button>
-			<button onclick="backToGameSetup()">Back to Player Selection</button>
-			<ul id="playerGameList"></ul>
-			<button onclick="gameStartForReal()">S-T-A-R-T K-I-L-L-E-R</button>
-		</div>
-		<div id="final">
-			<p id="InAction"></p>
-			<ul id="playerGameListFinal"></ul>
-			<p id="rawXml"></p>
-		</div>
-		<div id="winner">
-			<ul id="winnerList"></ul>
-		</div>
-		<script>
-			var players = ["JOHN", "FAZ", "TODD", "GARY", "MARY", "HARRY POTTER"]; // holds all players
-			var gamePlayers = []; // holds ONLY players flagged as playing
-			var gamePlayersTemp = [];
-			var totalmoves = 0;// whilst zero, option to shuffle player order is allowed
-			var lives = 3;
-			var livesCount = 0;
-			var livesPlayer = 0;
-			var parser, xmlDoc;
-			var theGame = "";
-			//var currentPlayer = "";
-			//var currentPlayerArrayId = 0;
-			var totalPlayers = 0; // holds the total players playing regardless of whether they have lives or not
-			var totalPlayersLeft = 0;
-			//these used for holding info about the player in loop
-			var playerName = "";
-			var playerLife = 0;
-			var playerId = 0;
-			// these below are used to hold data about the player currently playing
-			var currentPlayerName = "";
-			var currentPlayerLife = 0;
-			var currentPlayerId = 1;
-			var nextPlayerId = 0;
-			var timerId = 0;
-			var confirmTimerId = 0;
-
-			function tester() {
-				var e = document.getElementById("bob");
-				e.className = "potmissconfirm";
-				e.value = 0;
-				setTimeout(function () { your_func(); }, 5000);
-			}
-
-			function your_func() {
-				var e = document.getElementById("bob");
-				e.className = "miss";
-				e.value = 1;
-			}
-
-			function nameAdd(letter) {
-				document.getElementById("pname").value += letter;
-				pnameSpan.innerText = document.getElementById("pname").value;
-			}
-
-			function rubPlayer() {
-				var s = document.getElementById("pname").value;
-				if (s.length > 0) {
-					document.getElementById("pname").value = s.substring(0, (s.length) - 1);
-				}
-				pnameSpan.innerText = document.getElementById("pname").value;
-			}
-
-			function xmlLoop() {
-				parser = new DOMParser();
-				xmlDoc = parser.parseFromString("<players><player><name>maggie</name><life>1</life><id>0</id></player><player><name>bob</name><life>32</life><id>1</id></player><player><name>john</name><life>42</life><id>2</id></player></players>", "text/xml");
-
-				var z = xmlDoc.getElementsByTagName("player");
-				for (var k = 0; k < z.length; k++) {
-					var x = z[k].childNodes;
-					alert(x[0].firstChild.nodeValue);
-					alert(x[1].firstChild.nodeValue);
-					alert(x[2].firstChild.nodeValue);
-				}
-				parser = null;
-			}
-
-			function myMove() {
-				var elem = document.getElementById("actionChangeGrowDiv");
-				var pos = 0;
-				confirmTimerId = setInterval(frame, 5);
-				function frame() {
-					if (pos == screen.width) {
-						clearInterval(id);
-					} else {
-						pos++;
-						elem.style.width = pos + "px";
-					}
-				}
-			}
-
-			var playerPot = function (id) {
-				return function curried_func(e) {
-					//id is currentPlayerId
-					var pot = document.getElementById("actionPot");
-					var miss = document.getElementById("actionMiss");
-					var action = document.getElementById("actionChange");
-					pot.style.display = "none";
-					miss.style.display = "none";
-					document.getElementById("actionChangeDiv").style.display = "block";
-					document.getElementById("actionChangeDiv").style.width = screen.width;
-					document.getElementById("actionChangeDiv").style.zIndex = 2;
-					document.getElementById("actionChangeGrowDiv").style.display = "inline-block";
-					document.getElementById("actionChangeGrowDiv").style.height = "228px";
-					document.getElementById("actionChange").innerText = "Confirming POT . . .";
-					action.style.display = "inline-block";
-					if (action.value == "99") {
-						myMove();
-						timerId = setTimeout(function () { runPlayerPot(pot,miss); }, 5000);
-					}
-				}
-			}
-
-			var playerActionChange = function (id) {
-				return function curried_func(e) {
-					// this stops the timed event . . 
-					clearTimeout(timerId);
-					// . . .and this stops the interval which is the growing width bar . . . 
-					clearInterval(confirmTimerId);
-					document.getElementById("actionChange").value = "99";
-					try {
-						document.getElementById("actionPot").style.display = "inline-block";
-						document.getElementById("actionMiss").style.display = "inline-block";
-						document.getElementById("actionChange").style.display = "none";
-						document.getElementById("actionChangeGrowDiv").style.width = "0px";
-						document.getElementById("actionChangeGrowDiv").style.display = "none";
-						document.getElementById("actionChangeDiv").style.display = "none";
-						document.getElementById("actionChangeDiv").style.zIndex = "-1";
-					} catch{ }
-				}
-			}
-
-			function runPlayerPot(pot,miss) {
-				if (document.getElementById("actionChange").value == "99") {
-					gameSetListInPlay();
-				} else {
-					document.getElementById("actionChange").value = "99";
-				}
-			}
-
-			function runPlayerMiss(pot, miss) {
-				if (document.getElementById("actionChange").value == "99") {
-					// player miss . . . . . 
-					// reduce the players life count . . .
-					currentPlayerLife = parseInt(parseInt(currentPlayerLife) - 1);
-					// update the XML that holds the game situation
-					theGame = theGame.replace("<name>" + currentPlayerName + "</name><life>" + (parseInt(currentPlayerLife) + 1).toString() + "</life>", "<name>" + currentPlayerName + "</name><life>" + ((parseInt(currentPlayerLife))).toString() + "</life>");
-					// Is the player out?
-					if (parseInt(currentPlayerLife) == 0) {
-						var ulWinnerList = document.getElementById("winnerList");
-						var uiWinnerList = document.createElement("li");
-						uiWinnerList.innerText = ordinal_suffix_of(totalPlayersLeft) + " " + currentPlayerName;
-						ulWinnerList.insertBefore(uiWinnerList, ulWinnerList.firstChild);
-						if (totalPlayersLeft == 2) {
-							var medal = document.createElement("span");
-							medal.className = "medalsecond";
-							// add medal to list
-							uiWinnerList.appendChild(medal);
-						}
-						if (totalPlayersLeft == 3) {
-							var medal = document.createElement("span");
-							medal.className = "medalthird";
-							// add medal to list
-							uiWinnerList.appendChild(medal);
-						}
-						totalPlayersLeft = parseInt(totalPlayersLeft) - 1;
-					}
-					gameSetListInPlay();
-				} else {
-					document.getElementById("actionChange").value = "99";
-					try {
-						document.getElementById("actionPot").style.display = "inline-block";
-						document.getElementById("actionMiss").style.display = "inline-block";
-					} catch{ }
-					document.getElementById("actionChange").style.display = "none";
-				}
-			}
-
-			var playerMiss = function (id) {
-				return function curried_func(e) {
-					var pot = document.getElementById("actionPot");
-					var miss = document.getElementById("actionMiss");
-					var action = document.getElementById("actionChange");
-					pot.style.display = "none";
-					miss.style.display = "none";
-					document.getElementById("actionChangeDiv").style.display = "block";
-					document.getElementById("actionChangeDiv").style.width = screen.width;
-					document.getElementById("actionChangeDiv").style.zIndex = 2;
-					document.getElementById("actionChangeGrowDiv").style.display = "inline-block";
-					document.getElementById("actionChangeGrowDiv").style.height = "228px";
-					document.getElementById("actionChange").innerText = "Confirming MISS . . .";
-					action.style.display = "inline-block";
-					if (action.value == "99") {
-						myMove();
-						timerId = setTimeout(function () { runPlayerMiss(pot, miss); }, 5000);
-					}
-				}
-			}
-			// this takes a number and adds st,th etc.. at the end. So 1 becomes 1st, 3 becomes 3rd etc....
-			function ordinal_suffix_of(i) {
-				var j = i % 10,
-					k = i % 100;
-				if (j == 1 && k != 11) {
-					return i + "st";
-				}
-				if (j == 2 && k != 12) {
-					return i + "nd";
-				}
-				if (j == 3 && k != 13) {
-					return i + "rd";
-				}
-				return i + "th";
-			}
-
-			function setCurrentPlayer() {
-				if (totalPlayersLeft == 1) {
-					//alert("we have a winner");
-					document.getElementById("home").style.display = "none";
-					document.getElementById("gameSetUp").style.display = "none";
-					document.getElementById("playersDiv").style.display = "none";
-					document.getElementById("game").style.display = "none";
-					document.getElementById("final").style.display = "none";
-					document.getElementById("winner").style.display = "block";
-					// add the last player as the winner!
-					var ulWinnerList = document.getElementById("winnerList");
-					var uiWinnerList = document.createElement("li");
-
-					uiWinnerList.innerText = ordinal_suffix_of(totalPlayersLeft) + " " + currentPlayerName;
-					ulWinnerList.insertBefore(uiWinnerList, ulWinnerList.firstChild);
-					var medal = document.createElement("span");
-					medal.className = "medalfirst";
-					// add medal to list
-					uiWinnerList.appendChild(medal);
-					return;
-				} else {
-
-					var cp = document.getElementById("InAction");
-					cp.innerHTML = "";
-					var pot = document.createElement("button");
-					var miss = document.createElement("button");
-					var nameSpan = document.createElement("div");
-					var heartsSpan = document.createElement("div");
-					var confirmAction = document.createElement("button");
-					var confirmActionDiv = document.createElement("div");
-					var confirmActionGrowDiv = document.createElement("div");
-					var resultDiv = document.createElement("div");
-
-					resultDiv.style.height = "228px";
-					resultDiv.id = "resultDiv";
-					resultDiv.style.zIndex = "-1";
-
-					confirmActionDiv.height = "228px";
-					confirmActionDiv.id = "actionChangeDiv";
-					confirmActionDiv.style.display = "none";
-					confirmActionDiv.style.position = "relative";
-					confirmActionDiv.style.top = "-228px";
-					confirmActionDiv.style.zIndex = -1;
-
-					confirmActionGrowDiv.height = "228px";
-					confirmActionGrowDiv.id = "actionChangeGrowDiv";
-					confirmActionGrowDiv.style.display = "none";
-					confirmActionGrowDiv.style.position = "absolute";
-					confirmActionGrowDiv.style.zIndex = -1;
-					confirmActionGrowDiv.style.backgroundColor = "red";
-					confirmActionGrowDiv.style.width = "0px";
-
-					confirmAction.style.width = "100%";
-					//confirmAction.style.left = "25%";
-					confirmAction.style.display = "none";
-					confirmAction.value = "99";
-					confirmAction.id = "actionChange";
-					confirmAction.className = "potMissSize";
-					confirmAction.style.position = "absolute";
-					confirmAction.style.zIndex = 1;
-					//confirmAction.innerText = "Confirming . . . ";
-					confirmAction.addEventListener("click", playerActionChange(currentPlayerId));
-
-					pot.innerText = "POT";
-					pot.className = "pot";
-					pot.id = "actionPot";
-					pot.addEventListener("click", playerPot(currentPlayerId));
-
-					miss.className = "miss";
-					miss.id = "actionMiss";
-					miss.innerText = "MISS";
-					miss.addEventListener("click", playerMiss(currentPlayerId));
-					
-					nameSpan.className = "playa";
-					nameSpan.innerText = currentPlayerName;// "Current Player : " + currentPlayerName + " (currentPlayerId:" + currentPlayerId + ")  Lives Remaining : " + currentPlayerLife + " [id:" + currentPlayerId;
-					nameSpan.style.display = "block";
-
-					livesCount = lives;
-					// set hearts
-					while (parseInt(livesCount) > 0) {
-						// i.e. they still have lives
-						if (parseInt(currentPlayerLife) >= parseInt(livesCount)) {
-							// create heart spans . .
-							var heartSpan = document.createElement("span");
-							heartSpan.className = "heart";
-							// add hearts to list . . .
-							heartsSpan.appendChild(heartSpan);
-						} else {
-							// create heart spans . .
-							var heartSpan = document.createElement("span");
-							heartSpan.className = "heartLoss";
-							// add hearts to list . . .
-							heartsSpan.appendChild(heartSpan);
-						}
-						livesCount = parseInt(livesCount) - 1;
-					}
-					heartsSpan.style.display = "block";//new line
-
-					cp.appendChild(nameSpan).appendChild(heartsSpan);
-
-					resultDiv.appendChild(pot);
-					resultDiv.appendChild(miss);
-
-					cp.appendChild(resultDiv);
-					confirmActionDiv.appendChild(confirmActionGrowDiv);
-					confirmActionDiv.appendChild(confirmAction);
-					cp.appendChild(confirmActionDiv);
-
-					rawXml.innerHTML = "";
-					rawXml.innerHTML = "Players Remaining : " + totalPlayersLeft;
-					//rawXml.innerHTML = "totalPlayersLeft:" + totalPlayersLeft + "<p></p><p></p><p></p><p></p>  theGame : " + theGame + "<br>Next Player is : " + nextPlayerId;
-				}
-			}
-
-			function gameSetListInPlay() {
-				nextPlayerId = 0; // reset. This cannot end the function as 0 . . .  PlayerIds start at 1 . . .
-				// this is THE function that determines who is next AND is the game over
-				var ulGame = document.getElementById("playerGameListFinal");
-				ulGame.innerHTML = "";
-				parser = new DOMParser();
-				xmlDoc = parser.parseFromString(theGame, "text/xml");
-
-				var z = xmlDoc.getElementsByTagName("player");
-				for (var k = 0; k < z.length; k++) {
-					var x = z[k].childNodes;
-					playerName = x[0].firstChild.nodeValue;
-					playerLife = parseInt(x[1].firstChild.nodeValue);
-					playerId = parseInt(x[2].firstChild.nodeValue);
-
-
-					// who is the next player?
-					//alert("playerId:" + playerId + " currentPlayerId:" + currentPlayerId + " playerLife:" + playerLife + " nextPlayerId:" + nextPlayerId);
-
-					if (parseInt(nextPlayerId) == 0) {
-						if (parseInt(playerId) > parseInt(currentPlayerId)) {
-							if (parseInt(playerLife) > 0) {
-								nextPlayerId = playerId;
-							}
-						}
-					}
-
-					livesCount = lives;
-					var liGame = document.createElement("li");
-
-					while (parseInt(livesCount) > 0) {
-						// i.e. they still have lives
-						if (parseInt(playerLife) >= parseInt(livesCount)) {
-							// create heart spans . .
-							var heartSpan = document.createElement("span");
-							heartSpan.className = "heart";
-							// add hearts to list . . .
-							liGame.appendChild(heartSpan);
-						} else {
-							// create heart spans . .
-							var heartSpan = document.createElement("span");
-							heartSpan.className = "heartLoss";
-							// add hearts to list . . .
-							liGame.appendChild(heartSpan);
-						}
-						livesCount = parseInt(livesCount) - 1;
-					}
-
-					liGame.appendChild(document.createTextNode(" "+playerName));
-					ulGame.appendChild(liGame);
-				}
-				//alert("0:"+nextPlayerId);
-				if (parseInt(nextPlayerId) == 0) {
-					for (var k = 0; k < z.length; k++) {
-						var x = z[k].childNodes;
-						if (parseInt(currentPlayerId) != parseInt(x[2].firstChild.nodeValue)) {
-							if (parseInt(x[1].firstChild.nodeValue) > 0) {
-								nextPlayerId = parseInt(x[2].firstChild.nodeValue);
-								//currentPlayerName = x[0].firstChild.nodeValue;
-								//currentPlayerLife = parseInt(x[1].firstChild.nodeValue);
-								//currentPlayerId = parseInt(x[2].firstChild.nodeValue);
-								break;
-							}
-						}
-					}
-				}
-				//alert("1:" + nextPlayerId);
-
-				// set the 'Current Player' variables here
-				for (var k = 0; k < z.length; k++) {
-					var x = z[k].childNodes;
-					if (parseInt(nextPlayerId) == parseInt(x[2].firstChild.nodeValue)) {
-						currentPlayerName = x[0].firstChild.nodeValue;
-						currentPlayerLife = parseInt(x[1].firstChild.nodeValue);
-						currentPlayerId = parseInt(x[2].firstChild.nodeValue);
-						break;
-					}
-				}
-
-				parser = null;
-				setCurrentPlayer();
-			}
-
-			function gameStartForReal() {
-				currentPlayerId = 1; // holds a sequential Id for the player
-				//currentPlayer = "";
-				theGame = "<players>";
-				document.getElementById("home").style.display = "none";
-				document.getElementById("gameSetUp").style.display = "none";
-				document.getElementById("playersDiv").style.display = "none";
-				document.getElementById("game").style.display = "none";
-
-				var ulGame = document.getElementById("playerGameListFinal");
-
-				var arrayLengthGameReal = gamePlayers.length;
-				for (var i = 0; i < arrayLengthGameReal; i++) {
-					// 'currentPlayerName' is always the FIRST player out the hat . . .
-					if (currentPlayerName == "") {
-						//currentPlayer = "<player><name>" + gamePlayers[i] + "</name><life>" + lives.toString() + "</life></player>";
-						currentPlayerName = gamePlayers[i];
-						currentPlayerLife = parseInt(lives);
-					}
-					// 'theGame' is a complete XML string of players that will track lives etc...
-					theGame += "<player><name>" + gamePlayers[i] + "</name><life>" + lives.toString() + "</life><id>" + currentPlayerId.toString() + "</id></player>";
-
-					// add player to list . . .
-					var liGame = document.createElement("li");
-					currentPlayerId = parseInt(currentPlayerId) + 1;
-
-					livesCount = lives;
-					while (parseInt(livesCount) > 0) {
-						// create heart spans . .
-						var heartSpan = document.createElement("span");
-						heartSpan.className = "heart";
-						// add hearts to list . . .
-						liGame.appendChild(heartSpan);
-						livesCount = parseInt(livesCount) - 1;
-					}
-
-					liGame.appendChild(document.createTextNode(" "+gamePlayers[i]));
-					// now add the list item (with hearts) to the list
-					ulGame.appendChild(liGame);
-
-					totalPlayers = totalPlayers + 1;
-				}
-				totalPlayersLeft = totalPlayers;
-				theGame += "</players>";
-
-				currentPlayerId = 1;
-				setCurrentPlayer();
-			}
-
-			function shufflePlayers() {
-				array = gamePlayers;
-				var currentIndex = array.length, temporaryValue, randomIndex;
-
-				// While there remain elements to shuffle...
-				while (0 !== currentIndex) {
-
-					// Pick a remaining element...
-					randomIndex = Math.floor(Math.random() * currentIndex);
-					currentIndex -= 1;
-
-					// And swap it with the current element.
-					temporaryValue = array[currentIndex];
-					array[currentIndex] = array[randomIndex];
-					array[randomIndex] = temporaryValue;
-				}
-				gamePlayers = [];
-				gamePlayers = array;
-				gameStart();
-			}
-
-			function backToGameSetup() {
-				gamePlayers = [];
-				document.getElementById("home").style.display = "none";
-				document.getElementById("gameSetUp").style.display = "block";
-				document.getElementById("playersDiv").style.display = "none";
-				document.getElementById("game").style.display = "none";
-			}
-
-			function gameStart() {
-				document.getElementById("home").style.display = "none";
-				document.getElementById("gameSetUp").style.display = "none";
-				document.getElementById("playersDiv").style.display = "none";
-				document.getElementById("game").style.display = "block";
-
-				var ulGame = document.getElementById("playerGameList");
-				document.getElementById("playerGameList").innerHTML = "";
-				var arrayLengthGame = gamePlayers.length;
-				for (var i = 0; i < arrayLengthGame; i++) {
-					var liGame = document.createElement("li");
-					liGame.appendChild(document.createTextNode(gamePlayers[i]));
-					ulGame.appendChild(liGame);
-				}
-			}
-
-			function gameSetUpStop() {
-				document.getElementById("home").style.display = "block";
-				document.getElementById("gameSetUp").style.display = "none";
-				document.getElementById("game").style.display = "none";
-				document.getElementById("playersDiv").style.display = "none";
-			}
-
-			var checkFunc = function (someVar, x) {
-				return function curried_func(e) {
-					// do something here
-					var lfckv = x.checked;
-					if (lfckv == true) {
-						//alert("add " + someVar);
-						gamePlayers.push(someVar);
-					}
-					else {
-						var index = gamePlayers.indexOf(someVar);
-						if (index !== -1) { gamePlayers.splice(index, 1) };
-						//alert("remove " + someVar);
-					}
-				}
-			}
-
-			var butFunc = function (someVar, x) {
-				return function curried_func(e) {
-					// as this is a button passing a value it means when 1 is passed in it means the player is NOT currently selected . . .
-					var lfckv = x.value;
-					if (lfckv == 1) {
-						gamePlayers.push(someVar);
-						x.value = 0;
-						x.className = "playerSelected";
-					}
-					else {
-						var index = gamePlayers.indexOf(someVar);
-						if (index !== -1) { gamePlayers.splice(index, 1) };
-						x.value = 1;
-						x.className = "playerSelect";
-					}
-				}
-			}
-
-			function gameSetUp() {
-				document.getElementById("playersDiv").style.display = "none";
-				document.getElementById("home").style.display = "none";
-				document.getElementById("gameSetUp").style.display = "block";
-				document.getElementById("playerListSelected").innerHTML = "";
-
-				var ul = document.getElementById("playerListSelected");
-				var arrayLength = players.length;
-				for (var i = 0; i < arrayLength; i++) {
-					var pl = players[i];
-					//var li = document.createElement("li");
-					//var lb = document.createElement("label");
-					//var checkbox = document.createElement('input');
-					var butt = document.createElement("button");
-
-					// label
-					//lb.innerText = pl;
-
-					// checkbox
-					//checkbox.type = "checkbox";
-					//checkbox.name = pl;
-					//checkbox.value = pl;
-					//checkbox.addEventListener("click", checkFunc(pl, checkbox));
-
-					butt.type = "button";
-					butt.innerText = pl;
-					butt.className = "playerSelect";
-					butt.value = 1;
-					butt.addEventListener("click", butFunc(pl, butt));
-
-					//li.appendChild(lb);
-					//li.appendChild(checkbox);
-					//li.appendChild(butt);
-					ul.appendChild(butt);
-				}
-			}
-
-			function startAddPlayer() {
-				document.getElementById("playersDiv").style.display = "block";
-				document.getElementById("pname").focus();
-			}
-
-			function addPlayer() {
-				players.push(document.getElementById("pname").value);
-				document.getElementById("pname").value = "";
-
-				var ul = document.getElementById("playerList");
-				document.getElementById("playerList").innerHTML = "";
-				var arrayLength = players.length;
-				for (var i = 0; i < arrayLength; i++) {
-					var li = document.createElement("li");
-					li.appendChild(document.createTextNode(players[i]));
-					ul.appendChild(li);
-				}
-			}
-		</script>
-
+<body onload="startThis(function (){startThis2();});">
+    <div id="helpThis" class="helpdiv" style="display:none">
+        <h1>Rules</h1>
+        <h2>[1] Player breaking : If they fail to pot from the break they get another shot without losing a life *unless* they pot the white in which case they lose a life</h2>
+        <h2>[2] Any ball, including the black, can be potted at anytime</h2>
+        <h2>[3] Potting the white loses a life regardless of potting any other ball(s)</h2>
+        <h2>[4] Re-rack all balls when there is 1 (or no) balls left on the table</h2>
+        <h2>[5] Player breaking from a re-rack :  If they fail to pot from the break they get another shot without losing a life *unless* they pot the white in which case they lose a life</h2>
+        <h2>[6] Losing a Life :<br />+ You pot the white (regardless of potting any other ball(s))<br />+ You fail to pot anything<br />+ You hit a ball with your hand<br />+ You cannot be found within 3 minutes of it being your turn<br />+ You hit the table and the balls move<br />+ Only 1 life maximum can be lost per turn<br/></h2>
+        <h2 onclick="helpClose()" style="text-align:center;width:100%;cursor:pointer">>>>>>> CLOSE <<<<<<</h2>
+    </div>
+    <div id="logo" class="logoClass" style="position:absolute;top:10px;left:10px;display:none;cursor:none" onclick="helpOpen()">
+        <span>KILLER</span>
+        <br />
+        <span>Rules</span>
+    </div>
+    <div id="champSplash" style="display: block; text-align: center; z-index: 1; position: absolute; margin: auto; width: 33%; top: 100px;">
+        <span class="medalFirst">
+            <span class="medalFirstName" style="color: yellow;width:inherit" id="wwwx"> </span>
+        </span>
+    </div>
+    <div id="splash" style="display:block;text-align:center;margin: 0 auto;padding-top:200px;padding-bottom:0px;z-index:1">
+        <button type="button" id="hello" class="splashbutton">KILLER</button>
+        <p id="blink" style="z-index:-1;position:relative;top:-200px">START</p>
+    </div>
+    <div id="home" style="display:none">
+        <button class="optionButtonAddPlayer" onclick="startAddPlayer()">ADD PLAYERS</button>
+        <button onclick="gameSetUp()">SETUP GAME</button>
+        <div>
+            <span class="playerFirst"></span><span class="playerFirstName">Faz</span>
+        </div>
+    </div>
+    <div id="gameSetUp" style="display:none">
+        <div class="topBar">
+            <button onclick="gameStartInitial()">READY >>>>></button>
+            <button onclick="gameSetUpStop()" style="display:none">CANCEL</button>
+        </div>
+        <div class="topHeading">
+            SELECT PLAYERS
+        </div>
+
+        <div id="playerListSelected">
+
+        </div>
+        <button type="button" onclick="pickAll()" style="display:none">pick all (test function)</button>
+        <button type="button" onclick="pickAllAndPlay()" style="display:none">pick all and play(test function)</button>
+    </div>
+    <div id="playersDiv" style="display:none">
+        <div class="topBar">
+            <button onclick='gameSetUp("1");'>CANCEL >>>>></button>
+        </div>
+        <div class="topHeading">
+            <span id="pnameSpan" style="width:400px;min-width:400px;max-width:600px">. . . . . .</span>
+            <div style="position:relative;top:-80px;left:66%;width:300px;max-width:300px" class="letterblocks"><button style="font-size: 28px;" type="button" onclick="addPlayer()">ADD</button></div>
+            <input type="text" id="pname" style="display:none;visibility:hidden;height:0px;width:0px" />
+        </div>
+        <div class="letterblocks">
+            <button type="button" onclick="nameAdd('A');">A</button>
+            <button type="button" onclick="nameAdd('B');">B</button>
+            <button type="button" onclick="nameAdd('C');">C</button>
+            <button type="button" onclick="nameAdd('D');">D</button>
+            <button type="button" onclick="nameAdd('E');">E</button>
+            <button type="button" onclick="nameAdd('F');">F</button>
+            <button type="button" onclick="nameAdd('G');">G</button>
+            <button type="button" onclick="nameAdd('H');">H</button>
+            <button type="button" onclick="nameAdd('I');">I</button>
+            <button type="button" onclick="nameAdd('J');">J</button>
+            <button type="button" onclick="nameAdd('K');">K</button>
+            <button type="button" onclick="nameAdd('L');">L</button>
+            <button type="button" onclick="nameAdd('M');">M</button>
+            <button type="button" onclick="nameAdd('N');">N</button>
+            <button type="button" onclick="nameAdd('O');">O</button>
+            <button type="button" onclick="nameAdd('P');">P</button>
+            <button type="button" onclick="nameAdd('Q');">Q</button>
+            <button type="button" onclick="nameAdd('R');">R</button>
+            <button type="button" onclick="nameAdd('S');">S</button>
+            <button type="button" onclick="nameAdd('T');">T</button>
+            <button type="button" onclick="nameAdd('U');">U</button>
+            <button type="button" onclick="nameAdd('V');">V</button>
+            <button type="button" onclick="nameAdd('W');">W</button>
+            <button type="button" onclick="nameAdd('X');">X</button>
+            <button type="button" onclick="nameAdd('Y');">Y</button>
+            <button type="button" onclick="nameAdd('Z');">Z</button>
+            <button type="button" onclick="nameAdd('0');">0</button>
+            <button type="button" onclick="nameAdd('1');">1</button>
+            <button type="button" onclick="nameAdd('2');">2</button>
+            <button type="button" onclick="nameAdd('3');">3</button>
+            <button type="button" onclick="nameAdd('4');">4</button>
+            <button type="button" onclick="nameAdd('5');">5</button>
+            <button type="button" onclick="nameAdd('6');">6</button>
+            <button type="button" onclick="nameAdd('7');">7</button>
+            <button type="button" onclick="nameAdd('8');">8</button>
+            <button type="button" onclick="nameAdd('9');">9</button>
+            <button type="button" onclick="nameAdd(' ');">SPACE</button>
+            <button type="button" onclick="rubPlayer()">RUB</button>
+        </div>
+        <ul id="playerList"></ul>
+    </div>
+    <div id="game" style="display:none">
+        <div class="topBar">
+            <button onclick="gameStartForReal()">GO >>>>></button>
+        </div>
+        <div class="topHeading" style="height:70px;min-height:70px">
+            PLAYER ORDER&nbsp;<button type="button" class="shuffle" onclick="shufflePlayers()"></button>
+        </div>
+
+        <div class="row">
+            <div class="column" style="width:25%;">
+
+            </div>
+            <div class="column" style="width:75%;">
+                <div class="letterblocks">
+                    <ul id="playerGameList"></ul>
+                </div>
+            </div>
+            <div class="column" style="width:10%;">
+
+            </div>
+        </div>
+        <div class="bottomBar">
+            <button onclick="backToGameSetup()"><<<<< Back to Player Selection</button>
+        </div>
+    </div>
+    <div id="final" style="top:0px;position:relative">
+        <p id="InAction"></p>
+        <ul id="playerGameListFinal"></ul>
+        <p id="rawXml"></p>
+        <div class="loserdiv" id="losers" style="display:none">
+            <div style="position:relative;padding-top:60px"></div>
+            <ul id="loserlist" class="loserlistclass"></ul>
+        </div>
+    </div>
+    <div id="winner" style="display:none;width:100%">
+        <div class="row">
+            <div class="column" style="width:10%;">
+
+            </div>
+            <div class="column" style="width:80%;">
+                <ul id="winnerList" style="width:80%;"></ul>
+            </div>
+            <div class="column" style="width:10%;">
+
+            </div>
+        </div>
+        <div class="bottomBar" style="position:absolute;bottom:70px">
+            <button type="button" onclick="backToStart();"><<<<< FINISH >>>>></button>
+        </div>
+    </div>
 </body>
 </html>
